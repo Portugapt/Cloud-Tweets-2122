@@ -1,1 +1,3 @@
 architecture/credentials-gs.json
+data/data.csv
+dev/ETL/input/data.csv

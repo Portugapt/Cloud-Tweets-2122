@@ -1,0 +1,88 @@
+paths:
+  /add-tweet/{username}/{location}/{text}/{language}/{favorite_count}:
+    post:
+      summary: Create new tweet.
+      responses:
+        '200':    # status code
+  /delete-tweet/{tweetId}:
+    delete:
+      summary: Delete tweet.
+      responses:
+        '200':    # status code
+  /list-tweet-username/{username}:
+    delete:
+      summary: Lists all tweets from username.
+      responses:
+        '200':    # status code«
+          description: List of tweet info
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    username:
+                      type: string
+                    text:
+                      type: string
+                    hashtag:
+                      type: array
+                      items:
+                        type: string
+                    dateCreation:
+                      type: timestamp
+  /list-language/{startTime-endTime}:
+    get:
+      summary: List of spoken languages by time interval.
+      responses:
+        '200':    # status code
+          description: List of spoken languages
+          content:
+            application/json:
+              schema: 
+                type: array
+  /list-location/{startTime-endTime}:
+    get:
+      summary: List of location by time interval.
+      responses:
+        '200':    # status code
+          description: List of location
+          content:
+            application/json:
+              schema: 
+                type: array
+  /search-tweet/{searchString}:
+    get:
+      summary: List of tweets that contain search string.
+      responses:
+        '200':    # status code
+          description: List of tweets
+          content:
+            application/json:
+              schema: 
+                type: array
+                items: 
+                  type: string
+  /random-tweet/{startTime-endTime}:
+    get:
+      summary: Selects a random tweet by time interval.
+      responses:
+        '200':    # status code
+          description: Tweet text
+          content:
+            application/json:
+              schema: 
+                type: string
+  /random-tweet/{language}:
+    get:
+      summary: Selects a random tweet by language.
+      responses:
+        '200':    # status code
+          description: Tweet text
+          content:
+            application/json:
+              schema: 
+                type: string
