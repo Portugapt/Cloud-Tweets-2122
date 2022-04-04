@@ -11,9 +11,12 @@
     - [Connections](#connections)
   - [Diagram](#diagram)
 - [Google cloud console commands](#google-cloud-console-commands)
+  - [Install SDK's](#install-sdks)
+    - [gsutil](#gsutil)
   - [Create Google Storage Bucket](#create-google-storage-bucket)
   - [Setting up credentials](#setting-up-credentials)
   - [Create Cloud Storage Bucket](#create-cloud-storage-bucket)
+    - [Send read_files.txt to Bucket](#send-read_filestxt-to-bucket)
   - [Create BigQuery Database](#create-bigquery-database)
   - [Create BigQuery Tables](#create-bigquery-tables)
 
@@ -244,6 +247,30 @@ Construir o diagrama
 
 # Google cloud console commands
 
+## Install SDK's
+
+### gsutil
+
+https://cloud.google.com/storage/docs/gsutil_install#debian-and-ubuntu
+
+```bash
+sudo apt-get install gcc python-dev python-setuptools libffi-dev
+```
+
+```bash
+sudo pip install gsutil
+```
+
+Add gsutil command
+```bash
+export PATH=${PATH}:$usr/bin/gsutil
+```
+
+Run
+```bash
+gsutil config
+```
+To login into the account. All should be set now.
 ## Create Google Storage Bucket
 
 With the goal of creating the Google Storage bucket, the following commands should do the trick:
@@ -290,6 +317,14 @@ export GOOGLE_APPLICATION_CREDENTIALS="Scripts/credentials-gs.json"
 gsutil mb -l EUROPE-WEST1 -c STANDARD gs://cloud-computing-2122-bjr
 ```
 
+### Send read_files.txt to Bucket
+
+https://cloud.google.com/storage/docs/gsutil/commands/cp
+
+```bash
+gsutil cp data/read_files.txt gs://cloud-computing-2122-bjr/control/
+```
+
 ## Create BigQuery Database
 
 ```bash
@@ -299,3 +334,5 @@ cadeira-nuvem-2122:bq_cloud_2122
 ```
 
 ## Create BigQuery Tables
+
+https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example#pyspark
