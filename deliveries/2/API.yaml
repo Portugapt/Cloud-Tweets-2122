@@ -1,10 +1,10 @@
 paths:
-  /add-tweet/{username}/{location}/{text}/{language}/{favorite_count}:
+  /admin/add-tweet/{username}/{location}/{text}/{language}/{favorite_count}:
     post:
       summary: Create new tweet.
       responses:
         '200':    # status code
-  /delete-tweet/{tweetId}:
+  /admin/delete-tweet/{tweetId}:
     delete:
       summary: Delete tweet.
       responses:
@@ -69,16 +69,6 @@ paths:
   /random-tweet/{startTime-endTime}:
     get:
       summary: Selects a random tweet by time interval.
-      responses:
-        '200':    # status code
-          description: Tweet text
-          content:
-            application/json:
-              schema: 
-                type: string
-  /random-tweet/{language}:
-    get:
-      summary: Selects a random tweet by language.
       responses:
         '200':    # status code
           description: Tweet text
