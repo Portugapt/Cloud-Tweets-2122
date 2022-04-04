@@ -17,6 +17,7 @@
   - [Setting up credentials](#setting-up-credentials)
   - [Create Cloud Storage Bucket](#create-cloud-storage-bucket)
     - [Send read_files.txt to Bucket](#send-read_filestxt-to-bucket)
+    - [Send CSV0s to Bucket](#send-csv0s-to-bucket)
   - [Create BigQuery Database](#create-bigquery-database)
   - [Create BigQuery Tables](#create-bigquery-tables)
 
@@ -66,7 +67,9 @@ Consistency requirements:
 ### How?
 
 * 0: Check which CSV's havent been read
+  * https://stackoverflow.com/questions/48279061/gcs-read-a-text-file-from-google-cloud-storage-directly-into-python
 * 1: Read the CSV(s)
+  * https://cloud.google.com/storage/docs/listing-objects#storage-list-objects-python
 * 2: Query db_users
 * 3: Structure into 3/4 spark tables
 * 3-1: Check if any user needs updating
@@ -304,7 +307,6 @@ gcloud iam service-accounts keys create gs-credentials.json --iam-account=gs-ser
 ```
 
 And we download it from the console files.
-
 ## Setting up credentials
 
 ```bash
@@ -325,6 +327,11 @@ https://cloud.google.com/storage/docs/gsutil/commands/cp
 gsutil cp data/read_files.txt gs://cloud-computing-2122-bjr/control/
 ```
 
+### Send CSV0s to Bucket
+
+```bash
+gsutil cp data/DATEFILE.csv gs://cloud-computing-2122-bjr/data/
+```
 ## Create BigQuery Database
 
 ```bash

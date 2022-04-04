@@ -1,10 +1,18 @@
+# Utility
+jupyterlab==3.0.16
+ipykernel==6.0.3
+
 # SDK's
 gcloud==0.18.3
+google-cloud-storage
 
 # Coding
-unittest2==1.1.0 
+unittest2>=1.1.0 
 
 # API's
-grpc-interceptor ~= 0.11.0
-grpcio-tools ~= 1.30
+grpc-interceptor >= 0.11.0
+grpcio-tools >= 1.30
 
+# Data
+
+pyspark>=3.1.2
