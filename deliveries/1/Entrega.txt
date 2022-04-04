@@ -1,0 +1,12 @@
+Ukraine Conflict Twitter Dataset
+
+Twitter Data related to the Ukrainian-Russian Conflict.
+
+Updated every day between 1 am to 3am UTC. This means today.
+
+.csv
+
+Between 3 to 5 gb.
+
+https://www.kaggle.com/bwandowando/ukraine-russian-crisis-twitter-dataset-1-2-m-rows
+
