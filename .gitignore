@@ -4,3 +4,4 @@ dev/ETL/input/data.csv
 dev/ETL/.ipynb_checkpoints/Spark Job - Notebook-checkpoint.ipynb
 .markdownlint.json
 credentials/credentials-gs.json
+dev/ETL/credentials/credentials-gs.json
