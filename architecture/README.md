@@ -13,13 +13,15 @@
 - [Google cloud console commands](#google-cloud-console-commands)
   - [Install SDK's](#install-sdks)
     - [gsutil](#gsutil)
+  - [bq](#bq)
   - [Create Google Storage Bucket](#create-google-storage-bucket)
   - [Setting up credentials](#setting-up-credentials)
   - [Create Cloud Storage Bucket](#create-cloud-storage-bucket)
     - [Send read_files.txt to Bucket](#send-read_filestxt-to-bucket)
-    - [Send CSV0s to Bucket](#send-csv0s-to-bucket)
+    - [Send CSV's to Bucket](#send-csvs-to-bucket)
   - [Create BigQuery Database](#create-bigquery-database)
-  - [Create BigQuery Tables](#create-bigquery-tables)
+  - [Dataproc Cluster Creation](#dataproc-cluster-creation)
+    - [Dataproc Job Submit](#dataproc-job-submit)
 
 ## Structure
 
@@ -274,6 +276,13 @@ Run
 gsutil config
 ```
 To login into the account. All should be set now.
+
+## bq
+
+```bash
+sudo snap install google-cloud-cli --classic
+```
+
 ## Create Google Storage Bucket
 
 With the goal of creating the Google Storage bucket, the following commands should do the trick:
@@ -310,7 +319,7 @@ And we download it from the console files.
 ## Setting up credentials
 
 ```bash
-export GOOGLE_APPLICATION_CREDENTIALS="Scripts/credentials-gs.json"
+export GOOGLE_APPLICATION_CREDENTIALS="credentials/credentials-gs.json"
 ```
 
 ## Create Cloud Storage Bucket
@@ -327,11 +336,8 @@ https://cloud.google.com/storage/docs/gsutil/commands/cp
 gsutil cp data/read_files.txt gs://cloud-computing-2122-bjr/control/
 ```
 
-### Send CSV0s to Bucket
-
-```bash
-gsutil cp data/DATEFILE.csv gs://cloud-computing-2122-bjr/data/
-```
+### Send CSV's to Bucket
++
 ## Create BigQuery Database
 
 ```bash
@@ -340,6 +346,35 @@ bq --location=europe-west1 mk \
 cadeira-nuvem-2122:bq_cloud_2122
 ```
 
-## Create BigQuery Tables
+
+## Dataproc Cluster Creation
+
+https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors
+
+```bash
+gcloud dataproc clusters create cloud-2122-etl-spark \
+  --region europe-west1 \
+  --zone europe-west1-c \
+  --master-machine-type n1-standard-2 \
+  --master-boot-disk-size 100 \
+  --num-workers 2 \
+  --worker-machine-type n1-standard-2 \
+  --worker-boot-disk-size 50 \
+  --image-version 2.0-debian10 \
+  --initialization-actions gs://goog-dataproc-initialization-actions-europe-west1/connectors/connectors.sh \
+  --metadata bigquery-connector-version=1.2.0 \
+  --metadata spark-bigquery-connector-version=0.21.0 \
+  --metadata GCS_CONNECTOR_VERSION=2.2.2 \
+  --project cadeira-nuvem-2122
+```
+
+### Dataproc Job Submit
+
+```bash
+gcloud dataproc jobs submit pyspark gs://cloud-computing-2122-bjr/spark-jobs/write_to_bigquery.py \
+    --cluster=cloud-2122-etl-spark \
+    --region=europe-west1 \
+    --jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar
+```
 
 https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example#pyspark
