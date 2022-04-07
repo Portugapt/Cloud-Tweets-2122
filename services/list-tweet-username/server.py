@@ -5,8 +5,8 @@ import os
 from flask import Flask, render_template
 import grpc
 
-from proto_pb2 import ClearListRequest, Tweet
-from proto_pb2_grpc import ClearTweetsStub
+from clear_tweet_proto_pb2 import ClearListRequest, Tweet
+from clear_tweet_proto_pb2_grpc import ClearTweetsStub
 
 app = Flask(__name__)
 

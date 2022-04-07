@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+enum ResponseType {
+    NOT_AUTHORIZED = 0;
+    AUTHORIZED = 1;
+}
+
+message AuthRequest {
+    string username = 1;
+    string password = 2;
+}
+
+message AuthResponse {
+    ResponseType response = 1;
+}
+
+service Authentication {
+    rpc Authenticate (AuthRequest) returns (AuthResponse);
+}

@@ -2,10 +2,10 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import proto_pb2 as proto__pb2
+import auth_proto_pb2 as auth__proto__pb2
 
 
-class ClearTweetsStub(object):
+class AuthenticationStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -14,42 +14,42 @@ class ClearTweetsStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.ClearTweet = channel.unary_unary(
-                '/ClearTweets/ClearTweet',
-                request_serializer=proto__pb2.ClearListRequest.SerializeToString,
-                response_deserializer=proto__pb2.ClearListResponse.FromString,
+        self.Authenticate = channel.unary_unary(
+                '/Authentication/Authenticate',
+                request_serializer=auth__proto__pb2.AuthRequest.SerializeToString,
+                response_deserializer=auth__proto__pb2.AuthResponse.FromString,
                 )
 
 
-class ClearTweetsServicer(object):
+class AuthenticationServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def ClearTweet(self, request, context):
+    def Authenticate(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
 
-def add_ClearTweetsServicer_to_server(servicer, server):
+def add_AuthenticationServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'ClearTweet': grpc.unary_unary_rpc_method_handler(
-                    servicer.ClearTweet,
-                    request_deserializer=proto__pb2.ClearListRequest.FromString,
-                    response_serializer=proto__pb2.ClearListResponse.SerializeToString,
+            'Authenticate': grpc.unary_unary_rpc_method_handler(
+                    servicer.Authenticate,
+                    request_deserializer=auth__proto__pb2.AuthRequest.FromString,
+                    response_serializer=auth__proto__pb2.AuthResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'ClearTweets', rpc_method_handlers)
+            'Authentication', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
  # This class is part of an EXPERIMENTAL API.
-class ClearTweets(object):
+class Authentication(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def ClearTweet(request,
+    def Authenticate(request,
             target,
             options=(),
             channel_credentials=None,
@@ -59,8 +59,8 @@ class ClearTweets(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/ClearTweets/ClearTweet',
-            proto__pb2.ClearListRequest.SerializeToString,
-            proto__pb2.ClearListResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/Authentication/Authenticate',
+            auth__proto__pb2.AuthRequest.SerializeToString,
+            auth__proto__pb2.AuthResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

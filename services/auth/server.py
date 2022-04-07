@@ -1,30 +1,29 @@
+import os
+
 from concurrent import futures
 
 import grpc
 from grpc_interceptor import ExceptionToStatusInterceptor
 
-from proto_pb2 import (
-    Tweet,
-    ClearListRequest,
-    ClearListResponse
+from auth_proto_pb2 import (
+    ResponseType,
+    AuthRequest,
+    AuthResponse
 )
-import proto_pb2_grpc
+import auth_proto_pb2_grpc
 
-class ClearTweetsService(proto_pb2_grpc.ClearTweetsServicer):
-    def ClearTweet(self, request, context):
-        new_id = request.tweet_list[0].id + 1
-        new_text = request.tweet_list[0].text + " Some more new text!"
-        new_user = request.tweet_list[0].user + "_username"
+class AuthenticationService(auth_proto_pb2_grpc.AuthenticationServicer):
+    def Authenticate(self, request, context):
 
-        return ClearListResponse(tweet_list=[Tweet(id=new_id, text=new_text, user=new_user)])
+        return AuthResponse(response=ResponseType.SOMETHING)
 
 def serve():
     interceptors = [ExceptionToStatusInterceptor()]
     server = grpc.server(
         futures.ThreadPoolExecutor(max_workers=10), interceptors=interceptors
     )
-    proto_pb2_grpc.add_ClearTweetsServicer_to_server(
-        ClearTweetsService(), server
+    auth_proto_pb2_grpc.add_AuthenticationServicer_to_server(
+        AuthenticationService(), server
     )
     '''
     with open("server.key", "rb") as fp:

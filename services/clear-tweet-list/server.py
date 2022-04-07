@@ -1,14 +1,16 @@
+import os
+
 from concurrent import futures
 
 import grpc
 from grpc_interceptor import ExceptionToStatusInterceptor
 
-from proto_pb2 import (
+from clear_tweet_proto_pb2 import (
     Tweet,
     ClearListRequest,
     ClearListResponse
 )
-import proto_pb2_grpc
+import clear_tweet_proto_pb2_grpc
 
 class ClearTweetsService(proto_pb2_grpc.ClearTweetsServicer):
     def ClearTweet(self, request, context):
@@ -23,7 +25,7 @@ def serve():
     server = grpc.server(
         futures.ThreadPoolExecutor(max_workers=10), interceptors=interceptors
     )
-    proto_pb2_grpc.add_ClearTweetsServicer_to_server(
+    clear_tweet_proto_pb2_grpc.add_ClearTweetsServicer_to_server(
         ClearTweetsService(), server
     )
     '''
