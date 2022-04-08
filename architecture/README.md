@@ -349,6 +349,12 @@ cadeira-nuvem-2122:bq_cloud_2122
 
 ## Dataproc Cluster Creation
 
+Create Temprary dataproc bucket for spark jobs
+
+```bash
+gsutil mb -l EUROPE-WEST1 -c STANDARD gs://cloud-computing-2122-dataproc-temp
+```
+
 https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors
 
 ```bash
@@ -369,6 +375,12 @@ gcloud dataproc clusters create cloud-2122-etl-spark \
 ```
 
 ### Dataproc Job Submit
+
+Copy the file to gcs
+
+```bash
+gsutil cp dev/ETL/write_to_bigquery.py gs://cloud-computing-2122-bjr/spark-jobs
+```
 
 ```bash
 gcloud dataproc jobs submit pyspark gs://cloud-computing-2122-bjr/spark-jobs/write_to_bigquery.py \
