@@ -1,19 +1,19 @@
 [
     {
       "description": "Unique Identifier of User",
-      "mode": "REQUIRED",
+      "mode": "NULLABLE",
       "name": "userId",
       "type": "INT64"
     },
     {
         "description": "Date of account creation",
-        "mode": "REQUIRED",
+        "mode": "NULLABLE",
         "name": "usercreatedts",
-        "type": "DATETIME"
+        "type": "TIMESTAMP"
     },
     {
       "description": "Username of User",
-      "mode": "REQUIRED",
+      "mode": "NULLABLE",
       "name": "username",
       "type": "STRING"
     },
