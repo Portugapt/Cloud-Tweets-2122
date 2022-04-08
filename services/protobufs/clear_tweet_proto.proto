@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+message Tweet {
+    int32 id = 1;
+    optional string text = 2;
+    optional string user = 3;
+}
+
+message ClearListRequest {
+    repeated Tweet tweet_list = 1;
+}
+
+message ClearListResponse {
+    repeated Tweet tweet_list = 1;
+}
+
+service ClearTweets {
+    rpc ClearTweet (ClearListRequest) returns (ClearListResponse);
+}
