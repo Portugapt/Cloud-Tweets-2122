@@ -17,11 +17,6 @@
   - [Create Google Storage Bucket](#create-google-storage-bucket)
   - [Setting up credentials](#setting-up-credentials)
   - [Create Cloud Storage Bucket](#create-cloud-storage-bucket)
-    - [Send read_files.txt to Bucket](#send-read_filestxt-to-bucket)
-    - [Send CSV's to Bucket](#send-csvs-to-bucket)
-  - [Create BigQuery Database](#create-bigquery-database)
-  - [Dataproc Cluster Creation](#dataproc-cluster-creation)
-    - [Dataproc Job Submit](#dataproc-job-submit)
 
 ## Structure
 
@@ -328,65 +323,10 @@ export GOOGLE_APPLICATION_CREDENTIALS="credentials/credentials-gs.json"
 gsutil mb -l EUROPE-WEST1 -c STANDARD gs://cloud-computing-2122-bjr
 ```
 
-### Send read_files.txt to Bucket
-
-https://cloud.google.com/storage/docs/gsutil/commands/cp
-
 ```bash
-gsutil cp data/read_files.txt gs://cloud-computing-2122-bjr/control/
-```
-
-### Send CSV's to Bucket
-+
-## Create BigQuery Database
-
-```bash
-bq --location=europe-west1 mk \
---dataset \
-cadeira-nuvem-2122:bq_cloud_2122
+gsutil mb -l EUROPE-WEST1 -c STANDARD gs://cloud-computing-2122-bjr-data
 ```
 
 
-## Dataproc Cluster Creation
 
-Create Temprary dataproc bucket for spark jobs
 
-```bash
-gsutil mb -l EUROPE-WEST1 -c STANDARD gs://cloud-computing-2122-dataproc-temp
-```
-
-https://github.com/GoogleCloudDataproc/initialization-actions/tree/master/connectors
-
-```bash
-gcloud dataproc clusters create cloud-2122-etl-spark \
-  --region europe-west1 \
-  --zone europe-west1-c \
-  --master-machine-type n1-standard-2 \
-  --master-boot-disk-size 100 \
-  --num-workers 2 \
-  --worker-machine-type n1-standard-2 \
-  --worker-boot-disk-size 50 \
-  --image-version 2.0-debian10 \
-  --initialization-actions gs://goog-dataproc-initialization-actions-europe-west1/connectors/connectors.sh \
-  --metadata bigquery-connector-version=1.2.0 \
-  --metadata spark-bigquery-connector-version=0.21.0 \
-  --metadata GCS_CONNECTOR_VERSION=2.2.2 \
-  --project cadeira-nuvem-2122
-```
-
-### Dataproc Job Submit
-
-Copy the file to gcs
-
-```bash
-gsutil cp dev/ETL/write_to_bigquery.py gs://cloud-computing-2122-bjr/spark-jobs
-```
-
-```bash
-gcloud dataproc jobs submit pyspark gs://cloud-computing-2122-bjr/spark-jobs/write_to_bigquery.py \
-    --cluster=cloud-2122-etl-spark \
-    --region=europe-west1 \
-    --jars=gs://spark-lib/bigquery/spark-bigquery-latest.jar
-```
-
-https://cloud.google.com/dataproc/docs/tutorials/bigquery-connector-spark-example#pyspark
