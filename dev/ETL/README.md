@@ -28,13 +28,15 @@ gcloud dataproc clusters create cloud-2122-etl-spark \
   --project cadeira-nuvem-2122
 ```
 
-## Dataproc Job Submit
+## Copy ETL script to GCS
 
 Copy the file to gcs
 
 ```bash
 gsutil cp loadDataToBigquery.py gs://cloud-computing-2122-bjr/spark-jobs/
 ```
+## Dataproc Job Submit
+
 
 ```bash
 gcloud dataproc jobs submit pyspark gs://cloud-computing-2122-bjr/spark-jobs/loadDataToBigquery.py \
