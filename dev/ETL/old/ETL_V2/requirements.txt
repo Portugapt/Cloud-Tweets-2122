@@ -1,0 +1,6 @@
+gcloud
+pandas-gbq
+tqdm
+numpy
+gcsfs
+fsspec

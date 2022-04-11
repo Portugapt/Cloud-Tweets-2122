@@ -1,0 +1,9 @@
+[
+    {
+      "description": "Cloud Bucket read files",
+      "mode": "NULLABLE",
+      "name": "csvfile",
+      "type": "STRING"
+    }
+  ]
+  

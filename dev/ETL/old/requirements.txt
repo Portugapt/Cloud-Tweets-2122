@@ -1,0 +1,2 @@
+gcloud==0.18.3
+google-cloud-storage
