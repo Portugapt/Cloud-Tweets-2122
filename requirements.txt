@@ -1,5 +1,5 @@
 # Utility
-jupyterlab==3.0.16
+jupyterlab==3.0.17
 ipykernel==6.0.3
 
 # SDK's
