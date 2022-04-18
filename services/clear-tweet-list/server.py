@@ -12,13 +12,18 @@ from clear_tweet_proto_pb2 import (
 )
 import clear_tweet_proto_pb2_grpc
 
-class ClearTweetsService(proto_pb2_grpc.ClearTweetsServicer):
+class ClearTweetsService(clear_tweet_proto_pb2_grpc.ClearTweetsServicer):
     def ClearTweet(self, request, context):
-        new_id = request.tweet_list[0].id + 1
-        new_text = request.tweet_list[0].text + " Some more new text!"
-        new_user = request.tweet_list[0].user + "_username"
+        results = []
 
-        return ClearListResponse(tweet_list=[Tweet(id=new_id, text=new_text, user=new_user)])
+        for row in request.tweet_list:
+            new_id = row.id
+            new_text = row.text
+            new_user = row.user
+
+            results.append(Tweet(id = new_id, text = new_text, user = new_user))
+
+        return ClearListResponse(tweet_list=results)
 
 def serve():
     interceptors = [ExceptionToStatusInterceptor()]
