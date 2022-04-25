@@ -5,6 +5,7 @@ from google.oauth2 import service_account
 from google.protobuf.json_format import MessageToJson
 
 from flask import Flask, render_template, json
+
 import grpc
 
 from clear_tweet_proto_pb2 import ClearListRequest, Tweet
@@ -12,8 +13,7 @@ from clear_tweet_proto_pb2_grpc import ClearTweetsStub
 
 app = Flask(__name__)
 
-
-def query(username, limit):
+def query(search, limit):
     key_path = os.getenv("GOOGLE_ACCOUNT_KEY", "../../../pythonBigQuery_credentials.json")
 
     credentials = service_account.Credentials.from_service_account_file(
@@ -25,12 +25,13 @@ def query(username, limit):
     query = """
             SELECT tweetId, username, tweettext
             FROM `cadeira-nuvem-2122.bq_cloud_2122.db_global`
-            WHERE username = @username
+            WHERE username LIKE @search
+            OR tweettext LIKE @search
             LIMIT @limit"""
     
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
-            bigquery.ScalarQueryParameter("username", "STRING", username),
+            bigquery.ScalarQueryParameter("search", "STRING", "%" + search + "%"),
             bigquery.ScalarQueryParameter("limit", "INT64", limit),
         ]
     )
@@ -51,10 +52,10 @@ CLEAR_TWEET_LIST_PORT = os.getenv("CLEAR_TWEET_LIST_PORT", "50060")
 clear_tweet_list_channel = grpc.insecure_channel(f"{CLEAR_TWEET_LIST_HOST}:{CLEAR_TWEET_LIST_PORT}")
 clear_tweet_list_client = ClearTweetsStub(clear_tweet_list_channel)
 
-@app.route("/list-tweet-username/<username>")
-@app.route("/list-tweet-username/<username>/<limit>")
-def render_homepage(username, limit='1000'):
-    results = query(username, limit)
+@app.route("/list-tweet-search/<search>")
+@app.route("/list-tweet-search/<search>/<limit>")
+def render_homepage(search, limit='1000'):
+    results = query(search, limit)
 
     clear_list_request = ClearListRequest(
         tweet_list=results
