@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: random-svc
+spec:
+  selector:
+    app: random
+    version: one
+  ports:
+  - protocol: TCP
+    port: 60100
+    targetPort: 60100
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-deployment-v1
+spec:
+  selector:
+    matchLabels:
+      app: random
+      version: one
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: random
+        version: one
+    spec:
+      containers:
+      - name: random
+        image: "europe-west1-docker.pkg.dev/cadeira-nuvem-2122/cloud-microservices/randomflask:latest"
+        env:
+            - name: RANDOMLANG_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: random-configmap
+                  key: language_service_name
+            - name: RANDOMTIME_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: random-configmap
+                  key: time_service_name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: random-lang-svc
+spec:
+  selector:
+    app: random-lang
+    version: one
+  ports:
+  - protocol: TCP
+    port: 60110
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-lang-deployment-v1
+spec:
+  selector:
+    matchLabels:
+      app: random-lang
+      version: one
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: random-lang
+        version: one
+    spec:
+      volumes:
+      - name: bq-read-key
+        secret:
+          secretName: bq-key
+      containers:
+      - name: random-lang
+        image: "europe-west1-docker.pkg.dev/cadeira-nuvem-2122/cloud-microservices/randomlang:latest"
+        volumeMounts:
+        - name: bq-read-key
+          mountPath: /var/secrets/bq
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/bq/key.json
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: random-time-svc
+spec:
+  selector:
+    app: random-time
+    version: one
+  ports:
+  - protocol: TCP
+    port: 60120
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: random-time-deployment-v1
+spec:
+  selector:
+    matchLabels:
+      app: random-time
+      version: one
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: random-time
+        version: one
+    spec:
+      volumes:
+      - name: bq-read-key
+        secret:
+          secretName: bq-key
+      containers:
+      - name: random-time
+        image: "europe-west1-docker.pkg.dev/cadeira-nuvem-2122/cloud-microservices/randomtime:latest"
+        volumeMounts:
+        - name: bq-read-key
+          mountPath: /var/secrets/bq
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/bq/key.json

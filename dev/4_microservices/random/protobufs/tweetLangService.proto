@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "tweetMessages.proto";
+
+service RandomLang {
+    rpc ReturnRandomLang (RandomLangRequest) returns (RandomResponse);
+}

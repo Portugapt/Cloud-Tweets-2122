@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "tweetMessages.proto";
+
+service searchUsername {
+    rpc service_searchUser (SearchUserRequest) returns (listTweetsResponse);
+}

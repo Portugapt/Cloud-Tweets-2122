@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: search-configmap
+data:
+  # property-like keys; each key maps to a simple value
+  string_service_name: "search-string-svc"
+  username_service_name: "search-username-svc"

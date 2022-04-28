@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - host: 34.77.147.159.nip.io
+    http:
+      paths:
+      - path: /random/
+        pathType: Prefix
+        backend:
+          service:
+            ## Service manifest in the random service folder
+            name: random-svc
+            port:
+              number: 60100
+      - path: /search/
+        pathType: Prefix
+        backend:
+          service:
+            ## Service manifest in the random service folder
+            name: search-svc
+            port:
+              number: 60200

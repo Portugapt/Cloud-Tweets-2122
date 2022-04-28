@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Tweets by search String</title>
+</head>
+<body>
+    <h1>These are the found tweets with the limt of {{limitResults}} </h1>
+    <ul>
+    {% for locat in foundList %}
+        <li>{{ locat.location }}</li>
+        <li>{{ locat.frequency }}</li>
+        <br>
+    {% endfor %}
+    </ul>
+</body>

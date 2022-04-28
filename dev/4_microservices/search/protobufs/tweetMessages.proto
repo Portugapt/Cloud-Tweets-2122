@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+/* SearchStringRequest represents a search query
+    for a string in a tweet. It has a limit of results */
+message SearchStringRequest {
+    string searchString = 1;
+    int32 limitResults = 2;
+}
+
+/* SearchUserRequest represents a search query
+    for all tweets from a username. It has a limit of results */
+message SearchUserRequest {
+    string searchUsername = 1;
+    int32 limitResults = 2;
+}
+
+/* ResponseTweet represents the structure
+    of a tweet. */
+message ResponseTweet {
+    int64 tweet_id = 1;
+    int64 user_id = 2;
+    string text = 3;
+    string posted_time = 4;
+    string language = 5;
+}
+
+message listTweetsResponse {
+    repeated ResponseTweet listTweet = 1;
+}

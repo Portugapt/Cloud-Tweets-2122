@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+import "tweetMessages.proto";
+
+service searchString {
+    rpc service_searchString (SearchStringRequest) returns (listTweetsResponse);
+}

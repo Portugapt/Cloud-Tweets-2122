@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "tweetMessages.proto";
+
+service BD_Locations {
+    rpc RetrieveLocations (TimeIntervalRequest) returns (listLocationResponse);
+}
+
+service ServiceLocations {
+    rpc LocationsCleaner (TimeIntervalRequest) returns (listLocationResponse);
+}

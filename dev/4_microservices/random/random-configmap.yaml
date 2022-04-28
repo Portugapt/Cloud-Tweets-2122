@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: random-configmap
+data:
+  # property-like keys; each key maps to a simple value
+  language_service_name: "random-lang-svc"
+  time_service_name: "random-time-svc"

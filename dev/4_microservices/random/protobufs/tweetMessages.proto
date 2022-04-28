@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+message RandomLangRequest {
+    string lang = 1;
+}
+
+message RandomTimeIntervalRequest {
+    string startTime = 1;
+    string endTime = 2;
+}
+
+message RandomResponse {
+    int64 tweet_id = 1;
+    int64 user_id = 2;
+    string text = 3;
+    string posted_time = 4;
+    string language = 5;
+}

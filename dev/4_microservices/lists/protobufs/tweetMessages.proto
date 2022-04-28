@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+/* TimeIntervalRequest represents a search query
+    for a time interval */
+message TimeIntervalRequest {
+    string startTime = 1;
+    string endTime = 2;
+}
+
+/* SpokenLanguage represents the structure
+    of a spoken language. It has the language
+    and the frequency */
+message SpokenLanguage {
+    string language = 1;
+    int32 frequency = 2;
+}
+
+message listSpokenLanguageResponse {
+    repeated SpokenLanguage listSpokenLanguage = 1;
+}
+
+/* SpokenLanguage represents the structure
+    of a location. It has the location
+    and the frequency */
+message Location {
+    string location = 1;
+    int32 frequency = 2;
+}
+
+message listLocationResponse {
+    repeated Location listLocation = 1;
+}
