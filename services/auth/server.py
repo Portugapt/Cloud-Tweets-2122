@@ -2,6 +2,10 @@ import os
 
 from concurrent import futures
 
+from google.cloud import bigquery
+from google.oauth2 import service_account
+from google.protobuf.json_format import MessageToJson
+
 import grpc
 from grpc_interceptor import ExceptionToStatusInterceptor
 
@@ -15,7 +19,35 @@ import auth_proto_pb2_grpc
 class AuthenticationService(auth_proto_pb2_grpc.AuthenticationServicer):
     def Authenticate(self, request, context):
 
-        return AuthResponse(response=ResponseType.SOMETHING)
+        key_path = os.getenv("GOOGLE_ACCOUNT_KEY", "../../../pythonBigQuery_credentials.json")
+
+        credentials = service_account.Credentials.from_service_account_file(
+            key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
+        )
+
+        client = bigquery.Client(credentials=credentials, project=credentials.project_id,)
+
+        query = """
+                SELECT username
+                FROM `cadeira-nuvem-2122.bq_cloud_2122.db_global`
+                WHERE username = @username
+                AND password = @password"""
+        
+        job_config = bigquery.QueryJobConfig(
+            query_parameters=[
+                bigquery.ScalarQueryParameter("username", "STRING", request.username),
+                bigquery.ScalarQueryParameter("password", "STRING", request.password),
+            ]
+        )
+
+        query_job = client.query(query, job_config=job_config) 
+
+        query_results = query_job.result()  # Waits for job to complete.
+
+        if len(query_results):
+            return AuthResponse(response=ResponseType.AUTquery_add_tweetHORIZED)
+        else:
+            return AuthResponse(response=ResponseType.NOT_THORIZED)
 
 def serve():
     interceptors = [ExceptionToStatusInterceptor()]
