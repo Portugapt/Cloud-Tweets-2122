@@ -29,7 +29,7 @@ class AuthenticationService(auth_proto_pb2_grpc.AuthenticationServicer):
 
         query = """
                 SELECT username
-                FROM `cadeira-nuvem-2122.bq_cloud_2122.db_global`
+                FROM `cadeira-nuvem-2122.bq_cloud_2122.db_admin_user`
                 WHERE username = @username
                 AND password = @password"""
         

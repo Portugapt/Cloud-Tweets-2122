@@ -1,0 +1,20 @@
+[
+    {
+        "description": "Unique Identifier of User",
+        "mode": "NULLABLE",
+        "name": "userId",
+        "type": "INTEGER"
+    },
+    {
+        "description": "Username",
+        "mode": "NULLABLE",
+        "name": "username",
+        "type": "STRING"
+    },
+    {
+        "description": "Password",
+        "mode": "NULLABLE",
+        "name": "password",
+        "type": "STRING"
+    }
+]
