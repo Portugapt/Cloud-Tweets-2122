@@ -1,5 +1,7 @@
 import os
 
+import random
+
 from google.cloud import bigquery
 from google.oauth2 import service_account
 from google.protobuf.json_format import MessageToJson
@@ -21,15 +23,18 @@ def query_add_tweet(username, tweettext):
 
     client = bigquery.Client(credentials=credentials, project=credentials.project_id,)
 
+    tweetId = random.randint(100000, 1000000000000000000)
+
     query = """
             INSERT INTO `cadeira-nuvem-2122.bq_cloud_2122.db_global`
-            (username, tweettext)
-            VALUES (@username, @tweettext)"""
+            (tweetId, username, tweettext)
+            VALUES (@tweetId, @username, @tweettext)"""
     
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
+            bigquery.ScalarQueryParameter("tweetId", "INTEGER", tweetId),
             bigquery.ScalarQueryParameter("username", "STRING", username),
-            bigquery.ScalarQueryParameter("tweettext", "STRING", tweettext),
+            bigquery.ScalarQueryParameter("tweettext", "STRING", tweettext)
         ]
     )
 

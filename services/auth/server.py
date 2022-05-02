@@ -44,10 +44,10 @@ class AuthenticationService(auth_proto_pb2_grpc.AuthenticationServicer):
 
         query_results = query_job.result()  # Waits for job to complete.
 
-        if len(query_results):
-            return AuthResponse(response=ResponseType.AUTquery_add_tweetHORIZED)
+        if query_results.total_rows > 0:
+            return AuthResponse(response=ResponseType.AUTHORIZED)
         else:
-            return AuthResponse(response=ResponseType.NOT_THORIZED)
+            return AuthResponse(response=ResponseType.NOT_AUTHORIZED)
 
 def serve():
     interceptors = [ExceptionToStatusInterceptor()]

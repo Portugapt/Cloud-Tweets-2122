@@ -22,7 +22,7 @@ def query_delete_tweet(tweetId):
     client = bigquery.Client(credentials=credentials, project=credentials.project_id,)
 
     query = """
-            DELETE FROM 'cadeira-nuvem-2122.bq_cloud_2122.db_global'
+            DELETE FROM `cadeira-nuvem-2122.bq_cloud_2122.db_global`
             WHERE tweetId = @tweetId"""
     
     job_config = bigquery.QueryJobConfig(
@@ -41,7 +41,7 @@ auth_channel = grpc.insecure_channel(f"{AUTH_HOST}:{AUTH_PORT}")
 auth_client = AuthenticationStub(auth_channel)
 
 
-@app.route("/add-delete/<username>/<password>/<tweetId>")
+@app.route("/delete-tweet/<username>/<password>/<tweetId>")
 def render_homepage(username, password, tweetId):
     auth_request = AuthRequest(
         username=username, password=password
