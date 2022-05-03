@@ -1,20 +1,21 @@
+# Execute command on ../
+# docker build . -f list-tweet-search/Dockerfile -t list-tweet-search
+
 FROM python
 
-RUN mkdir /list-tweet-username
-COPY . /list-tweet-username
+RUN mkdir /service
 
-RUN pip install -r requirements.txt	
+COPY protobufs/ /service/protobufs/
+COPY list-tweet-search/ /service/list/
 
-WORKDIR /list-tweet-username
+WORKDIR /service/list
 RUN pip install -r requirements.txt
-RUN python3 -m grpc_tools.protoc -I ../protobufs --python_out=. \
-           --grpc_python_out=. ../protobufs/clear_tweet_proto.proto
-#RUN openssl req -nodes -newkey rsa:4096 -subj /CN=marketplace \
-#                -keyout client.key -out client.csr
-#RUN --mount=type=secret,id=ca.key \
-#    openssl x509 -req -in client.csr -CA ca.pem -CAkey /run/secrets/ca.key \
-#                 -set_serial 1 -out client.pem
 
-EXPOSE 5000
+RUN python -m grpc_tools.protoc -I ../protobufs --python_out=. \
+                ../protobufs/auth_proto.proto
+RUN python -m grpc_tools.protoc -I ../protobufs --grpc_python_out=. \
+           ../protobufs/clear_tweet_proto.proto
+
+EXPOSE 50084
 ENV FLASK_APP=server.py
 ENTRYPOINT [ "flask", "run", "--host=0.0.0.0"]
