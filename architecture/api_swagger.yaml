@@ -20,6 +20,29 @@ paths:
       responses:
         '200':
           description: "successful operation"
+  /list-tweet-username/<username>:
+    get:
+      summary: Lists all tweets from username LIMIT=1000.
+      responses:
+        '200':
+          description: List of tweet info
+          schema: 
+            type: array
+            items: 
+              type: object
+              properties:
+                id:
+                  type: integer
+                username:
+                  type: string
+                text:
+                  type: string
+                hashtag:
+                  type: array
+                  items:
+                    type: string
+                dateCreation:
+                  type: string
   /list-tweet-username/<username>/<limit>:
     get:
       summary: Lists all tweets from username.
@@ -43,6 +66,16 @@ paths:
                     type: string
                 dateCreation:
                   type: string
+  /list-tweet-language/<language>:
+    get:
+      summary: List of spoken languages by time interval LIMIT=1000.
+      responses:
+        '200':
+          description: List of spoken languages
+          schema: 
+            type: array
+            items:
+              type: object
   /list-tweet-language/<language>/<limit>:
     get:
       summary: List of spoken languages by time interval.
@@ -53,12 +86,32 @@ paths:
             type: array
             items:
               type: object
+  /list-tweet-location/<location>:
+    get:
+      summary: List of location by time interval LIMIT=1000.
+      responses:
+        '200':
+          description: List of location
+          schema: 
+            type: array
+            items:
+              type: object
   /list-tweet-location/<location>/<limit>:
     get:
       summary: List of location by time interval.
       responses:
         '200':
           description: List of location
+          schema: 
+            type: array
+            items:
+              type: object
+  /list-tweet-search/<search>:
+    get:
+      summary: List of tweets that contain search string LIMIT=1000.
+      responses:
+        '200':
+          description: List of tweets
           schema: 
             type: array
             items:
