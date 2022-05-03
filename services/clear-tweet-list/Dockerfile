@@ -14,5 +14,5 @@ RUN pip install -r requirements.txt
 RUN python -m grpc_tools.protoc -I ../protobufs --grpc_python_out=. \
            ../protobufs/clear_tweet_proto.proto
 
-EXPOSE 60220
+EXPOSE 50060
 ENTRYPOINT [ "python", "server.py" ]
