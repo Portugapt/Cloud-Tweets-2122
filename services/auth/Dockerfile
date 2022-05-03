@@ -1,4 +1,4 @@
-# Execute command on ../
+# Execute command on ../ (this means inside services folder)
 # docker build . -f auth/Dockerfile -t auth
 
 FROM python

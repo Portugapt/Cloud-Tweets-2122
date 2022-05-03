@@ -1,4 +1,4 @@
-# Execute command on ../
+# Execute command on ../ (this means inside services folder)
 # docker build . -f clear-tweet-list/Dockerfile -t clear-tweet-list
 
 FROM python

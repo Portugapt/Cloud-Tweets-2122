@@ -1,4 +1,5 @@
-# Execute command on ../
+# Execute command on ../ (this means inside services folder)
+# Services folder has to contain a file called pythonBigQuery_credentials.json with google cloud access key
 # docker build . -f list-tweet-random/Dockerfile -t list-tweet-random
 
 FROM python
