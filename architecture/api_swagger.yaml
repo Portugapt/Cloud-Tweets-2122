@@ -1,0 +1,85 @@
+swagger: "2.0"
+info:
+  description: "API to access tweets from Ukraine war."
+  version: "1.0.0"
+  title: "Ukraine"
+basePath: "/"
+schemes:
+- "https"
+- "http"
+paths:
+  /add-tweet/<username>/<password>/<tweetusername>/<tweettext>:
+    post:
+      summary: Create new tweet.
+      responses:
+        '200':
+          description: "successful operation"
+  /delete-tweet/<username>/<password>/<tweetId>:
+    delete:
+      summary: Delete tweet.
+      responses:
+        '200':
+          description: "successful operation"
+  /list-tweet-username/<username>/<limit>:
+    get:
+      summary: Lists all tweets from username.
+      responses:
+        '200':
+          description: List of tweet info
+          schema: 
+            type: array
+            items: 
+              type: object
+              properties:
+                id:
+                  type: integer
+                username:
+                  type: string
+                text:
+                  type: string
+                hashtag:
+                  type: array
+                  items:
+                    type: string
+                dateCreation:
+                  type: string
+  /list-tweet-language/<language>/<limit>:
+    get:
+      summary: List of spoken languages by time interval.
+      responses:
+        '200':
+          description: List of spoken languages
+          schema: 
+            type: array
+            items:
+              type: object
+  /list-tweet-location/<location>/<limit>:
+    get:
+      summary: List of location by time interval.
+      responses:
+        '200':
+          description: List of location
+          schema: 
+            type: array
+            items:
+              type: object
+  /list-tweet-search/<search>/<limit>:
+    get:
+      summary: List of tweets that contain search string.
+      responses:
+        '200':
+          description: List of tweets
+          schema: 
+            type: array
+            items:
+              type: object
+  /list-tweet-random:
+    get:
+      summary: Selects a random tweet by time interval.
+      responses:
+        '200':
+          description: Tweet text
+          schema: 
+            type: array
+            items:
+              type: object
