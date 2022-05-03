@@ -8,5 +8,5 @@ spec:
     version: one
   ports:
   - protocol: TCP
-    port: 60220
+    port: 50060
  
