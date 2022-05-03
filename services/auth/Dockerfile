@@ -14,5 +14,5 @@ RUN pip install -r requirements.txt
 RUN python -m grpc_tools.protoc -I ../protobufs --python_out=. \
                 ../protobufs/auth_proto.proto
 
-EXPOSE 50060
+EXPOSE 50050
 ENTRYPOINT [ "python", "server.py"]

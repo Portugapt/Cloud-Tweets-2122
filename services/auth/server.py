@@ -71,7 +71,7 @@ def serve():
         require_client_auth=True,
     )
     '''
-    AUTH_PORT = os.getenv("AUTH_PORT", "50060")
+    AUTH_PORT = os.getenv("AUTH_PORT", "50050")
     server.add_insecure_port(f"[::]:{AUTH_PORT}")
     server.start()
     server.wait_for_termination()
