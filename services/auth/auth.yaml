@@ -4,7 +4,7 @@ metadata:
   name: service-auth
 spec:
   selector:
-    app: service
+    app: services
     version: one
   ports:
   - protocol: TCP
