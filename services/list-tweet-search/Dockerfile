@@ -16,4 +16,4 @@ RUN python -m grpc_tools.protoc -I ../protobufs --grpc_python_out=. \
 
 EXPOSE 50084
 ENV FLASK_APP=server.py
-ENTRYPOINT [ "flask", "run", "--host=0.0.0.0"]
+ENTRYPOINT [ "flask", "run", "--host=0.0.0.0", "--port=50084"]
