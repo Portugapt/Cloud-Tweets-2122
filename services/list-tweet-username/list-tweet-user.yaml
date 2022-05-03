@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-list-user
+spec:
+  selector:
+    app: service
+    version: one
+  ports:
+  - protocol: TCP
+    port: 50085
+ 
