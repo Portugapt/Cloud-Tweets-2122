@@ -9,6 +9,9 @@ jobs:
   build:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./services
     env:
       PROJECT_ID: cadeira-nuvem-2122
     steps:
@@ -22,8 +25,7 @@ jobs:
         export_default_credentials: true
     
     - name: Build LIST-TWEET-USERNAME-TEST
-      working-directory: ./services/list-tweet-username-test
-      run: docker build . --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -t list-tweet-username-test
+      run: docker build . --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -f list-tweet-username-test/Dockerfile -t list-tweet-username-test
 
     - name: Configure Docker Client
       run: |-
