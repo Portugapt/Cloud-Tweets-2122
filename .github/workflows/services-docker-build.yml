@@ -9,29 +9,39 @@ jobs:
   build:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./services/list-tweet-username-test
+    # defaults:
+    #   run:
+    #     working-directory: ./services/list-tweet-username-test
     env:
       PROJECT_ID: cadeira-nuvem-2122
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
     
-    - uses: google-github-actions/setup-gcloud@v0
-      with:
-        service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
-        project_id: ${{ env.PROJECT_ID }}
-        export_default_credentials: true
+    # - uses: google-github-actions/setup-gcloud@v0
+    #   with:
+    #     service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+    #     project_id: ${{ env.PROJECT_ID }}
+    #     export_default_credentials: true
     
     - name: Build LIST-TWEET-USERNAME-TEST
-      run: sudo docker build . --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -t list-tweet-username-test
+        uses: docker/build-push-action@v2
+        with:
+          context: ./services/list-tweet-username-test
+          push: false
+          tags: list-tweet-username-test
 
-    - name: Configure Docker Client
-      run: |-
-        gcloud auth configure-docker europe-west4-docker.pkg.dev --quiet
+    # - name: Build LIST-TWEET-USERNAME-TEST
+    #   run: sudo docker build . --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -t list-tweet-username-test
+
+    # - name: Configure Docker Client
+    #   run: |-
+    #     gcloud auth configure-docker europe-west4-docker.pkg.dev --quiet
         
-    - name: Push Docker Image to Artifact Registry
-      run: |-
-        docker tag list-tweet-username-test:latest europe-west4-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username-test:latest
-        docker push us-west2-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username-test:latest
+    # - name: Push Docker Image to Artifact Registry
+    #   run: |-
+    #     docker tag list-tweet-username-test:latest europe-west4-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username-test:latest
+    #     docker push us-west2-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username-test:latest
