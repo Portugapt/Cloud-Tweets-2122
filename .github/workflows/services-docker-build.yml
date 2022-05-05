@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image Build and push to GCP
 
 on:
   push:
@@ -6,17 +6,18 @@ on:
 
 jobs:
   build:
-    name: Build and Push to GCP
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./services/list-tweet-username-test
     env:
       PROJECT_ID: cadeira-nuvem-2122
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+      with:
+          install: true
+
     - uses: google-github-actions/setup-gcloud@v0
       with:
         service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
@@ -27,10 +28,130 @@ jobs:
       run: |-
         gcloud auth configure-docker europe-west4-docker.pkg.dev --quiet
 
-    - name: Build LIST-TWEET-USERNAME-TEST
-      run: sudo docker build . --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -t list-tweet-username-test
+    - name: Build admin-add-tweet
+      uses: docker/build-push-action@v2
+      with:
+        context: ./services
+        file: ./services/admin-add-tweet/Dockerfile
+        push: false
+        tags: admin-add-tweet
+        load: true
 
-    - name: Push Docker Image to Artifact Registry
+    - name: Build admin-delete-tweet
+      uses: docker/build-push-action@v2
+      with:
+        context: ./services
+        file: ./services/admin-delete-tweet/Dockerfile
+        push: false
+        tags: admin-delete-tweet
+        load: true
+
+    - name: Build auth
+      uses: docker/build-push-action@v2
+      with:
+        context: ./services
+        file: ./services/auth/Dockerfile
+        push: false
+        tags: auth
+        load: true
+
+    - name: Build clear-tweet-list
+      uses: docker/build-push-action@v2
+      with:
+        context: ./services
+        file: ./services/clear-tweet-list/Dockerfile
+        push: false
+        tags: clear-tweet-list
+        load: true
+
+    - name: Build list-tweet-language
+      uses: docker/build-push-action@v2
+      with:
+        context: ./services
+        file: ./services/list-tweet-language/Dockerfile
+        push: false
+        tags: list-tweet-language
+        load: true
+
+    - name: Build list-tweet-location
+      uses: docker/build-push-action@v2
+      with:
+        context: ./services
+        file: ./services/list-tweet-location/Dockerfile
+        push: false
+        tags: list-tweet-location
+        load: true
+
+    - name: Build list-tweet-random
+      uses: docker/build-push-action@v2
+      with:
+        context: ./services
+        file: ./services/list-tweet-random/Dockerfile
+        push: false
+        tags: list-tweet-random
+        load: true
+
+    - name: Build list-tweet-search
+      uses: docker/build-push-action@v2
+      with:
+        context: ./services
+        file: ./services/list-tweet-search/Dockerfile
+        push: false
+        tags: list-tweet-search
+        load: true
+
+    - name: Build list-tweet-username
+      uses: docker/build-push-action@v2
+      with:
+        context: ./services
+        file: ./services/list-tweet-username/Dockerfile
+        push: false
+        tags: list-tweet-username
+        load: true
+        
+
+
+    - name: Push Docker Image to Artifact Registry - admin-add-tweet
       run: |-
-        docker tag list-tweet-username-test:latest europe-west4-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username-test:latest
-        docker push us-west2-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username-test:latest
+        docker tag admin-add-tweet:latest europe-west4-docker.pkg.dev/$PROJECT_ID/services/admin-add-tweet:latest
+        docker push europe-west4-docker.pkg.dev/$PROJECT_ID/services/admin-add-tweet:latest
+
+    - name: Push Docker Image to Artifact Registry - admin-delete-tweet
+      run: |-
+        docker tag admin-delete-tweet:latest europe-west4-docker.pkg.dev/$PROJECT_ID/services/admin-delete-tweet:latest
+        docker push europe-west4-docker.pkg.dev/$PROJECT_ID/services/admin-delete-tweet:latest
+
+    - name: Push Docker Image to Artifact Registry - auth
+      run: |-
+        docker tag auth:latest europe-west4-docker.pkg.dev/$PROJECT_ID/services/auth:latest
+        docker push europe-west4-docker.pkg.dev/$PROJECT_ID/services/auth:latest
+
+    - name: Push Docker Image to Artifact Registry - clear-tweet-list
+      run: |-
+        docker tag clear-tweet-list:latest europe-west4-docker.pkg.dev/$PROJECT_ID/services/clear-tweet-list:latest
+        docker push europe-west4-docker.pkg.dev/$PROJECT_ID/services/clear-tweet-list:latest
+
+    - name: Push Docker Image to Artifact Registry - list-tweet-language
+      run: |-
+        docker tag list-tweet-language:latest europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-language:latest
+        docker push europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-language:latest
+
+    - name: Push Docker Image to Artifact Registry - list-tweet-location
+      run: |-
+        docker tag list-tweet-location:latest europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-location:latest
+        docker push europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-location:latest
+
+    - name: Push Docker Image to Artifact Registry - list-tweet-random
+      run: |-
+        docker tag list-tweet-random:latest europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-random:latest
+        docker push europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-random:latest
+
+    - name: Push Docker Image to Artifact Registry - list-tweet-search
+      run: |-
+        docker tag list-tweet-search:latest europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-search:latest
+        docker push europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-search:latest
+
+    - name: Push Docker Image to Artifact Registry - list-tweet-username
+      run: |-
+        docker tag list-tweet-username:latest europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-username:latest
+        docker push europe-west4-docker.pkg.dev/$PROJECT_ID/services/list-tweet-username:latest
