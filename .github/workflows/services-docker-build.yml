@@ -35,7 +35,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./services/list-tweet-username-test
-        push: yes
+        push: true
         tags: europe-west4-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username-test:latest
         
     - name: List docker images
