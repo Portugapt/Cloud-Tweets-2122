@@ -21,9 +21,9 @@ jobs:
         project_id: ${{ env.PROJECT_ID }}
         export_default_credentials: true
     
-    - name: Build LIST-TWEET-USERNAME
-      working-directory: services/list-tweet-username
-      run: docker build . --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -f services/list-tweet-username/Dockerfile -t list-tweet-username:latest
+    - name: Build LIST-TWEET-USERNAME-TEST
+      working-directory: ./services/list-tweet-username-test
+      run: docker build . --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -t list-tweet-username-test
 
     - name: Configure Docker Client
       run: |-
@@ -31,5 +31,5 @@ jobs:
         
     - name: Push Docker Image to Artifact Registry
       run: |-
-        docker tag list-tweet-username:latest europe-west4-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username:latest
-        docker push us-west2-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username:latest
+        docker tag list-tweet-username-test:latest europe-west4-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username-test:latest
+        docker push us-west2-docker.pkg.dev/$PROJECT_ID/images/list-tweet-username-test:latest
