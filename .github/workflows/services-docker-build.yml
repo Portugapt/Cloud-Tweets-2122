@@ -22,7 +22,8 @@ jobs:
         export_default_credentials: true
     
     - name: Build LIST-TWEET-USERNAME
-      run: docker build ./services --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -f services/list-tweet-username/Dockerfile -t list-tweet-username:latest
+      working-directory: ./services
+      run: docker build . --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -f services/list-tweet-username/Dockerfile -t list-tweet-username:latest
 
     - name: Configure Docker Client
       run: |-
