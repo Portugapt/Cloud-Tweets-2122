@@ -8,7 +8,9 @@ RUN mkdir /service
 
 COPY protobufs/ /service/protobufs/
 COPY admin-add-tweet/ /service/admin/
-COPY pythonBigQuery_credentials.json /service/admin/
+
+ARG BIGQUERY_ACCESS_KEY
+RUN echo $BIGQUERY_ACCESS_KEY > /service/admin/pythonBigQuery_credentials.json
 
 WORKDIR /service/admin
 RUN pip install -r requirements.txt

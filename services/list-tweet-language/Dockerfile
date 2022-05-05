@@ -8,7 +8,9 @@ RUN mkdir /service
 
 COPY protobufs/ /service/protobufs/
 COPY list-tweet-language/ /service/list/
-COPY pythonBigQuery_credentials.json /service/list/
+
+ARG BIGQUERY_ACCESS_KEY
+RUN echo $BIGQUERY_ACCESS_KEY > /service/list/pythonBigQuery_credentials.json
 
 WORKDIR /service/list
 RUN pip install -r requirements.txt
