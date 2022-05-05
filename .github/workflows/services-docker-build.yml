@@ -33,6 +33,9 @@ jobs:
         context: ./services/list-tweet-username-test
         push: false
         tags: list-tweet-username-test
+        
+    - name: List docker images
+      run: docker images
 
     # - name: Build LIST-TWEET-USERNAME-TEST
     #   run: sudo docker build . --build-arg BIGQUERY_ACCESS_KEY=${{ secrets.SERVICE_ACCOUNT_KEY }} -t list-tweet-username-test
