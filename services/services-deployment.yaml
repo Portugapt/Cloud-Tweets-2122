@@ -94,8 +94,8 @@ spec:
     version: one
   ports:
   - protocol: TCP
-    port: 50050
-    targetPort: 50050
+    port: 50000
+    targetPort: 50000
 ---
 apiVersion: apps/v1
 kind: Deployment
