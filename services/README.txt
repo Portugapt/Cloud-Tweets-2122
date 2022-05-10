@@ -17,6 +17,7 @@ gcloud container --project "cadeira-nuvem-2122" clusters create "twitter-renato-
 
 gcloud container clusters get-credentials twitter-renato-services-cluster --zone europe-west1-d --project cadeira-nuvem-2122
 
+kubectl create secret generic bigquery-key --from-file=pythonBigQuery_credentials.json=keys/pythonBigQuery_credentials.json
 
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update

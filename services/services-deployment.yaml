@@ -4,7 +4,7 @@ metadata:
   name: admin-add-tweet
 spec:
   selector:
-    app: admin-add-tweet
+    app: admin-add
     version: one
   ports:
   - protocol: TCP
@@ -18,24 +18,28 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: admin-add-tweet
+      app: admin-add
       version: one
   replicas: 3
   template:
     metadata:
       labels:
-        app: admin-add-tweet
+        app: admin-add
         version: one
     spec:
       containers:
-      - name: admin-add-tweet
-        image: "europe-west1-docker.pkg.dev/cadeira-nuvem-2122/cloud-microservices/admin-add-tweet:latest"
+      - name: admin-add
+        image: "europe-west4-docker.pkg.dev/cadeira-nuvem-2122/services/admin-add-tweet:latest"
         volumeMounts:
-        - name: access-key
-          mountPath: /home/bosutike/Cloud-Tweets-2122/services/keys
+        - name: bigquery-key
+          mountPath: /var/secrets/bigquery
         env:
         - name: GOOGLE_ACCOUNT_KEY_PATH
-          value: /home/bosutike/Cloud-Tweets-2122/services/keys/pythonBigQuery_credentials.json
+          value: /var/secrets/bigquery/pythonBigQuery_credentials.json
+      volumes:
+        - name: bigquery-key
+          secret:
+            secretName: bigquery-key
 ---
 apiVersion: v1
 kind: Service
@@ -43,7 +47,7 @@ metadata:
   name: admin-delete-tweet
 spec:
   selector:
-    app: admin-delete-tweet
+    app: admin-delete
     version: one
   ports:
   - protocol: TCP
@@ -57,24 +61,28 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: admin-delete-tweet
+      app: admin-delete
       version: one
   replicas: 3
   template:
     metadata:
       labels:
-        app: admin-delete-tweet
+        app: admin-delete
         version: one
     spec:
       containers:
-      - name: admin-delete-tweet
-        image: "europe-west1-docker.pkg.dev/cadeira-nuvem-2122/services/admin-delete-tweet:latest"
+      - name: admin-delete
+        image: "europe-west4-docker.pkg.dev/cadeira-nuvem-2122/services/admin-delete-tweet:latest"
         volumeMounts:
-        - name: access-key
-          mountPath: /home/bosutike/Cloud-Tweets-2122/services/keys
+        - name: bigquery-key
+          mountPath: /var/secrets/bigquery
         env:
         - name: GOOGLE_ACCOUNT_KEY_PATH
-          value: /home/bosutike/Cloud-Tweets-2122/services/keys/pythonBigQuery_credentials.json
+          value: /var/secrets/bigquery/pythonBigQuery_credentials.json
+      volumes:
+        - name: bigquery-key
+          secret:
+            secretName: bigquery-key
 ---
 apiVersion: v1
 kind: Service
@@ -107,5 +115,4 @@ spec:
     spec:
       containers:
       - name: auth
-        image: "europe-west1-docker.pkg.dev/cadeira-nuvem-2122/services/auth:latest"
---
+        image: "europe-west4-docker.pkg.dev/cadeira-nuvem-2122/services/auth:latest"
