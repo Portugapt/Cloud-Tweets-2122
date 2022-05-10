@@ -10,7 +10,7 @@ spec:
   - host: 23.251.133.28.nip.io
     http:
       paths:
-      - path: /admin-add-tweet/
+      - path: /add-tweet
         pathType: Prefix
         backend:
           service:
@@ -18,7 +18,7 @@ spec:
             name: admin-add-tweet
             port:
               number: 50051
-      - path: /admin-delete-tweet/
+      - path: /delete-tweet
         pathType: Prefix
         backend:
           service:
@@ -26,3 +26,11 @@ spec:
             name: admin-delete-tweet
             port:
               number: 50052
+      - path: /list-tweet-search
+        pathType: Prefix
+        backend:
+          service:
+            ## Service manifest in the random service folder
+            name: list-tweet-search
+            port:
+              number: 50084
