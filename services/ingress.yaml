@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-  - host: 23.251.133.28.nip.io
+  - host: 35.205.9.77.nip.io
     http:
       paths:
       - path: /add-tweet
@@ -26,6 +26,30 @@ spec:
             name: admin-delete-tweet
             port:
               number: 50052
+      - path: /list-tweet-language
+        pathType: Prefix
+        backend:
+          service:
+            ## Service manifest in the random service folder
+            name: list-tweet-language
+            port:
+              number: 50081
+      - path: /list-tweet-location
+        pathType: Prefix
+        backend:
+          service:
+            ## Service manifest in the random service folder
+            name: list-tweet-location
+            port:
+              number: 50082
+      - path: /list-tweet-random
+        pathType: Prefix
+        backend:
+          service:
+            ## Service manifest in the random service folder
+            name: list-tweet-random
+            port:
+              number: 50083
       - path: /list-tweet-search
         pathType: Prefix
         backend:
@@ -34,3 +58,11 @@ spec:
             name: list-tweet-search
             port:
               number: 50084
+      - path: /list-tweet-username
+        pathType: Prefix
+        backend:
+          service:
+            ## Service manifest in the random service folder
+            name: list-tweet-username
+            port:
+              number: 50085
