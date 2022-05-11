@@ -22,6 +22,9 @@ kubectl create secret generic bigquery-key --from-file=pythonBigQuery_credential
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 helm repo update
 
+# Possible error fix
+# helm upgrade -i nginx-ingress ingress-nginx/ingress-nginx
+
 helm install --replace nginx-ingress ingress-nginx/ingress-nginx
 
 kubectl get deployment nginx-ingress-ingress-nginx-controller
