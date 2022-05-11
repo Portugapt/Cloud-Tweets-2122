@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
-  - host: 34.78.69.83.nip.io
+  - host: HOST_IP.nip.io
     http:
       paths:
       - path: /add-tweet
