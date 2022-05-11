@@ -36,6 +36,8 @@ spec:
         env:
         - name: GOOGLE_ACCOUNT_KEY
           value: /var/secrets/bigquery/pythonBigQuery_credentials.json
+        - name: AUTH_HOST
+          value: "auth-svc"
       volumes:
         - name: bigquery-key
           secret:
@@ -79,6 +81,8 @@ spec:
         env:
         - name: GOOGLE_ACCOUNT_KEY
           value: /var/secrets/bigquery/pythonBigQuery_credentials.json
+        - name: AUTH_HOST
+          value: "auth-svc"
       volumes:
         - name: bigquery-key
           secret:
@@ -87,7 +91,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth
+  name: auth-svc
 spec:
   selector:
     app: auth
