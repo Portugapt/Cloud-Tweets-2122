@@ -1,10 +1,145 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: list-tweet-language
+spec:
+  selector:
+    app: list-tweet-lang
+    version: one
+  ports:
+  - protocol: TCP
+    port: 50081
+    targetPort: 50081
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: list-tweet-language-deployment-v1
+spec:
+  selector:
+    matchLabels:
+      app: list-tweet-lang
+      version: one
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: list-tweet-lang
+        version: one
+    spec:
+      containers:
+      - name: list-tweet-lang
+        image: "europe-west4-docker.pkg.dev/cadeira-nuvem-2122/services/list-tweet-language:latest"
+        volumeMounts:
+        - name: bigquery-key
+          mountPath: /var/secrets/bigquery
+        env:
+        - name: GOOGLE_ACCOUNT_KEY
+          value: /var/secrets/bigquery/pythonBigQuery_credentials.json
+        - name: CLEAR_TWEET_LIST_HOST
+          value: "clear-tweet-list-svc"
+      volumes:
+        - name: bigquery-key
+          secret:
+            secretName: bigquery-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: list-tweet-location
+spec:
+  selector:
+    app: list-tweet-loc
+    version: one
+  ports:
+  - protocol: TCP
+    port: 50082
+    targetPort: 50082
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: list-tweet-location-deployment-v1
+spec:
+  selector:
+    matchLabels:
+      app: list-tweet-loc
+      version: one
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: list-tweet-loc
+        version: one
+    spec:
+      containers:
+      - name: list-tweet-loc
+        image: "europe-west4-docker.pkg.dev/cadeira-nuvem-2122/services/list-tweet-location:latest"
+        volumeMounts:
+        - name: bigquery-key
+          mountPath: /var/secrets/bigquery
+        env:
+        - name: GOOGLE_ACCOUNT_KEY
+          value: /var/secrets/bigquery/pythonBigQuery_credentials.json
+        - name: CLEAR_TWEET_LIST_HOST
+          value: "clear-tweet-list-svc"
+      volumes:
+        - name: bigquery-key
+          secret:
+            secretName: bigquery-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: list-tweet-random
+spec:
+  selector:
+    app: list-tweet-rand
+    version: one
+  ports:
+  - protocol: TCP
+    port: 50083
+    targetPort: 50083
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: list-tweet-random-deployment-v1
+spec:
+  selector:
+    matchLabels:
+      app: list-tweet-rand
+      version: one
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: list-tweet-rand
+        version: one
+    spec:
+      containers:
+      - name: list-tweet-rand
+        image: "europe-west4-docker.pkg.dev/cadeira-nuvem-2122/services/list-tweet-random:latest"
+        volumeMounts:
+        - name: bigquery-key
+          mountPath: /var/secrets/bigquery
+        env:
+        - name: GOOGLE_ACCOUNT_KEY
+          value: /var/secrets/bigquery/pythonBigQuery_credentials.json
+        - name: CLEAR_TWEET_LIST_HOST
+          value: "clear-tweet-list-svc"
+      volumes:
+        - name: bigquery-key
+          secret:
+            secretName: bigquery-key
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: list-tweet-search
 spec:
   selector:
-    app: list-tweet
+    app: list-tweet-sch
     version: one
   ports:
   - protocol: TCP
@@ -18,17 +153,17 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: list-tweet
+      app: list-tweet-sch
       version: one
   replicas: 3
   template:
     metadata:
       labels:
-        app: list-tweet
+        app: list-tweet-sch
         version: one
     spec:
       containers:
-      - name: list-tweet
+      - name: list-tweet-sch
         image: "europe-west4-docker.pkg.dev/cadeira-nuvem-2122/services/list-tweet-search:latest"
         volumeMounts:
         - name: bigquery-key
@@ -37,7 +172,7 @@ spec:
         - name: GOOGLE_ACCOUNT_KEY
           value: /var/secrets/bigquery/pythonBigQuery_credentials.json
         - name: CLEAR_TWEET_LIST_HOST
-          value: clear-tweet-list
+          value: "clear-tweet-list-svc"
       volumes:
         - name: bigquery-key
           secret:
@@ -46,7 +181,52 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: clear-tweet-list
+  name: list-tweet-username
+spec:
+  selector:
+    app: list-tweet-user
+    version: one
+  ports:
+  - protocol: TCP
+    port: 50085
+    targetPort: 50085
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: list-tweet-username-deployment-v1
+spec:
+  selector:
+    matchLabels:
+      app: list-tweet-user
+      version: one
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: list-tweet-user
+        version: one
+    spec:
+      containers:
+      - name: list-tweet-user
+        image: "europe-west4-docker.pkg.dev/cadeira-nuvem-2122/services/list-tweet-username:latest"
+        volumeMounts:
+        - name: bigquery-key
+          mountPath: /var/secrets/bigquery
+        env:
+        - name: GOOGLE_ACCOUNT_KEY
+          value: /var/secrets/bigquery/pythonBigQuery_credentials.json
+        - name: CLEAR_TWEET_LIST_HOST
+          value: "clear-tweet-list-svc"
+      volumes:
+        - name: bigquery-key
+          secret:
+            secretName: bigquery-key
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: clear-tweet-list-svc
 spec:
   selector:
     app: clear-tweet
@@ -80,7 +260,9 @@ spec:
           mountPath: /var/secrets/bigquery
         env:
         - name: GOOGLE_ACCOUNT_KEY
-          value: /var/secrets/bigquery/pythonBigQuery_credentials.json
+          value: /var/secrets/bigquery/pythonBigQuery_credentials.jso
+        - name: GRPC_DNS_RESOLVER
+          value: "native"
       volumes:
         - name: bigquery-key
           secret:

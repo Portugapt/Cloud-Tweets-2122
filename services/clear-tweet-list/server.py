@@ -47,8 +47,7 @@ def serve():
         require_client_auth=True,
     )
     '''
-    CLEAR_TWEET_LIST_PORT = os.getenv("CLEAR_TWEET_LIST_PORT", "50060")
-    server.add_insecure_port(f"[::]:{CLEAR_TWEET_LIST_PORT}")
+    server.add_insecure_port("[::]:50060")
     server.start()
     server.wait_for_termination()
 
