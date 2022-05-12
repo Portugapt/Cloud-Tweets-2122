@@ -17,6 +17,7 @@
   - [Create Google Storage Bucket](#create-google-storage-bucket)
   - [Setting up credentials](#setting-up-credentials)
   - [Create Cloud Storage Bucket](#create-cloud-storage-bucket)
+  - [Services 2](#services-2)
 
 ## Structure
 
@@ -330,3 +331,10 @@ gsutil mb -l EUROPE-WEST1 -c STANDARD gs://cloud-computing-2122-bjr-data
 
 
 
+## Services 2
+
+https://cloud.google.com/run/docs/tutorials/secure-services
+
+Será preciso isto para grpc?
+
+https://cloud.google.com/endpoints/docs/grpc/set-up-cloud-run-espv2

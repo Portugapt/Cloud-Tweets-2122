@@ -1,1 +1,0 @@
-Para executar os serviços de listagem é necessário definir variavel de ambiente "GOOGLE_ACCOUNT_KEY" com o path para o ficheiro com a key.

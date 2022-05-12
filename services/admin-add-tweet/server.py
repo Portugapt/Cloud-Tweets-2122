@@ -43,10 +43,13 @@ def query_add_tweet(username, tweettext):
     query_results = query_job.result()  # Waits for job to complete.
 
 AUTH_HOST = os.getenv("AUTH_HOST", "localhost")
-AUTH_PORT = os.getenv("AUTH_PORT", "50050")
+AUTH_PORT = os.getenv("AUTH_PORT", "50000")
 auth_channel = grpc.insecure_channel(f"{AUTH_HOST}:{AUTH_PORT}")
 auth_client = AuthenticationStub(auth_channel)
 
+@app.route("/")
+def homepage():
+    return app.response_class(status=200)
 
 @app.route("/add-tweet/<username>/<password>/<tweetusername>/<tweettext>")
 def render_homepage(username, password, tweetusername, tweettext):

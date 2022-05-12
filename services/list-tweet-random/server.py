@@ -44,6 +44,10 @@ CLEAR_TWEET_LIST_PORT = os.getenv("CLEAR_TWEET_LIST_PORT", "50060")
 clear_tweet_list_channel = grpc.insecure_channel(f"{CLEAR_TWEET_LIST_HOST}:{CLEAR_TWEET_LIST_PORT}")
 clear_tweet_list_client = ClearTweetsStub(clear_tweet_list_channel)
 
+@app.route("/")
+def homepage():
+    return app.response_class(status=200)
+
 @app.route("/list-tweet-random")
 def render_homepage():
     results = query()

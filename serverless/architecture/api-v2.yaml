@@ -1,0 +1,23 @@
+swagger: "2.0"
+info:
+  description: "API to access tweets from Ukraine war."
+  version: "1.0.0"
+  title: "Ukraine"
+basePath: "/"
+schemes:
+- "https"
+- "http"
+paths:
+  /list-tweet-random:
+    get:
+      summary: Selects a random tweet by time interval.
+      operationId: list-tweet-random
+      x-google-backend:
+        address: https://list-tweet-random-ur6cadwxhq-ew.a.run.app/list-tweet-random ##Não vai ser preciso definir aqui a route
+      responses:
+        '200':
+          description: Tweet text
+          schema: 
+            type: array
+            items:
+              type: object
