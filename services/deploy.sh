@@ -27,7 +27,7 @@ do
 done
 
 # Generate ingress.yaml from template_ingress.yaml file updated with new ip
-cp template_ingress.yaml ingress.yaml
+cp ingress_template.yaml ingress.yaml
 sed -i "s/HOST_IP/$nginx_ingress_external_ip/g" ingress.yaml
 
 # Apply list services
