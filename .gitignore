@@ -14,3 +14,5 @@ data/220312-subset.csv
 
 services/pythonBigQuery_credentials.json
 services/keys/*
+
+**/pythonBigQuery_credentials.json*

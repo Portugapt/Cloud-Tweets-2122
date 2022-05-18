@@ -52,9 +52,24 @@ CLEAR_TWEET_LIST_PORT = os.getenv("CLEAR_TWEET_LIST_PORT", "50060")
 clear_tweet_list_channel = grpc.insecure_channel(f"{CLEAR_TWEET_LIST_HOST}:{CLEAR_TWEET_LIST_PORT}")
 clear_tweet_list_client = ClearTweetsStub(clear_tweet_list_channel)
 
-@app.route("/")
-def homepage():
-    return app.response_class(status=200)
+@app.route("/<search>")
+@app.route("/<search>/<limit>")
+def homepage(search, limit='1000'):
+    results = query(search, limit)
+
+    clear_list_request = ClearListRequest(
+        tweet_list=results
+    )
+    clear_list_response = clear_tweet_list_client.ClearTweet(
+        clear_list_request
+    )
+
+    response = app.response_class(
+        response=MessageToJson(clear_list_response),
+        status=200,
+        mimetype='application/json'
+    )
+    return response
 
 @app.route("/list-tweet-search/<search>")
 @app.route("/list-tweet-search/<search>/<limit>")
