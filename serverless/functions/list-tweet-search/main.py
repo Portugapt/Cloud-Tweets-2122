@@ -1,5 +1,5 @@
+import logging
 import os
-from unittest import result
 
 from google.cloud import bigquery
 from google.oauth2 import service_account
@@ -17,7 +17,7 @@ logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
 
-def query():
+def query(search, limit):
     key_path = os.getenv("GOOGLE_ACCOUNT_KEY", "../../../../pythonBigQuery_credentials.json")
 
     credentials = service_account.Credentials.from_service_account_file(
@@ -29,10 +29,18 @@ def query():
     query = """
             SELECT tweetId, username, tweettext
             FROM `cadeira-nuvem-2122.bq_cloud_2122.db_global`
-            ORDER BY RAND()
-            LIMIT 1"""
+            WHERE username LIKE @search
+            OR tweettext LIKE @search
+            LIMIT @limit"""
+
+    job_config = bigquery.QueryJobConfig(
+        query_parameters=[
+            bigquery.ScalarQueryParameter("search", "STRING", "%" + search + "%"),
+            bigquery.ScalarQueryParameter("limit", "INT64", limit),
+        ]
+    )
     
-    query_job = client.query(query) 
+    query_job = client.query(query, job_config=job_config) 
 
     query_results = query_job.result()  # Waits for job to complete.
 
@@ -43,27 +51,21 @@ def query():
 
     return results
 
-@functions_framework.http
-def list_tweet_random(request):
-    results = query()
+# @functions_framework.http
+@app.route("/<search>")
+@app.route("/<search>/<limit>")
+def list_tweet_search(search, limit='1000'):
+
+    logging.info(search)
+
+    results = query(search, limit)
+
+    headers = {'tweets': json.dumps(results)}
+    clear_response = requests.get('http://localhost:8081', headers=headers)
 
     response = app.response_class(
-        response=json.dumps(results),
+        response=clear_response,
         status=200,
         mimetype='application/json'
     )
     return response
-
-# @functions_framework.http
-# def list_tweet_random(request):
-#     results = query()
-
-#     headers = {'tweets': json.dumps(results)}
-#     clear_response = requests.get('http://localhost:8081', headers=headers)
-
-#     response = app.response_class(
-#         response=clear_response,
-#         status=200,
-#         mimetype='application/json'
-#     )
-#     return response
