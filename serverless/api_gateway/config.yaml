@@ -8,12 +8,75 @@ schemes:
 - "https"
 - "http"
 paths:
+  /admin-add-tweet:
+    get:
+      operationId: admin-add-tweet
+      x-google-backend:
+        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/admin_add_tweet
+      responses:
+        '200':
+          description: Authorized or not authorized
+  /admin-delete-tweet:
+    get:
+      operationId: admin-delete-tweet
+      x-google-backend:
+        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/admin_delete_tweet
+      responses:
+        '200':
+          description: Authorized or not authorized
+  /list-tweet-language:
+    get:
+      operationId: list-tweet-language
+      x-google-backend:
+        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_language
+      responses:
+        '200':
+          description: Tweet text
+          schema: 
+            type: array
+            items:
+              type: object
+  /list-tweet-location:
+    get:
+      operationId: list-tweet-location
+      x-google-backend:
+        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_location
+      responses:
+        '200':
+          description: Tweet text
+          schema: 
+            type: array
+            items:
+              type: object
   /list-tweet-random:
     get:
-      summary: Selects a random tweet by time interval.
       operationId: list-tweet-random
       x-google-backend:
-        address: https://us-central1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_random
+        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_random
+      responses:
+        '200':
+          description: Tweet text
+          schema: 
+            type: array
+            items:
+              type: object
+  /list-tweet-search:
+    get:
+      operationId: list-tweet-search
+      x-google-backend:
+        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_search
+      responses:
+        '200':
+          description: Tweet text
+          schema: 
+            type: array
+            items:
+              type: object
+  /list-tweet-username:
+    get:
+      operationId: list-tweet-username
+      x-google-backend:
+        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_username
       responses:
         '200':
           description: Tweet text

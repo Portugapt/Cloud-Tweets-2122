@@ -23,7 +23,7 @@ def clear_tweets(tweet_list):
 
 @functions_framework.http
 def clear_tweet_list(request):
-    tweets_list = json.loads(request.headers['tweets'])
+    tweets_list = json.loads(request.form['tweets'])
 
     results = clear_tweets(tweets_list)
 

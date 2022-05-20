@@ -18,7 +18,7 @@ logger.setLevel(logging.INFO)
 app = Flask(__name__)
 
 def query(search, limit):
-    key_path = os.getenv("GOOGLE_ACCOUNT_KEY", "../../../../pythonBigQuery_credentials.json")
+    key_path = os.getenv("GOOGLE_ACCOUNT_KEY", "../keys/pythonBigQuery_credentials.json")
 
     credentials = service_account.Credentials.from_service_account_file(
         key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
@@ -51,17 +51,19 @@ def query(search, limit):
 
     return results
 
-# @functions_framework.http
-@app.route("/<search>")
-@app.route("/<search>/<limit>")
-def list_tweet_search(search, limit='1000'):
+@functions_framework.http
+def list_tweet_search(request):
+    search = request.args.get("search")
+    limit = request.args.get("limit")
 
-    logging.info(search)
+    if limit == None or int(limit) < 0:
+        limit = '1000'
 
     results = query(search, limit)
 
-    headers = {'tweets': json.dumps(results)}
-    clear_response = requests.get('http://localhost:8081', headers=headers)
+    data = {'tweets': json.dumps(results)}
+    url = os.getenv("CLEAR_LIST_FUNCTION_URL", "http://localhost:8081")
+    clear_response = requests.post(url, data=data)
 
     response = app.response_class(
         response=clear_response,
