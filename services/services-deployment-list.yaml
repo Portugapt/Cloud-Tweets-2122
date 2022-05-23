@@ -20,7 +20,12 @@ spec:
     matchLabels:
       app: list-tweet-lang
       version: one
-  replicas: 3
+  replicas: 3º
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
@@ -66,6 +71,11 @@ spec:
       app: list-tweet-loc
       version: one
   replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
@@ -111,6 +121,11 @@ spec:
       app: list-tweet-rand
       version: one
   replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
@@ -156,6 +171,11 @@ spec:
       app: list-tweet-sch
       version: one
   replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
@@ -201,6 +221,11 @@ spec:
       app: list-tweet-user
       version: one
   replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
@@ -246,6 +271,11 @@ spec:
       app: clear-tweet
       version: one
   replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   template:
     metadata:
       labels:
