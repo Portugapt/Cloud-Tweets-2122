@@ -20,7 +20,7 @@ spec:
     matchLabels:
       app: list-tweet-lang
       version: one
-  replicas: 3º
+  replicas: 3
   strategy:
     type: RollingUpdate
     rollingUpdate:
