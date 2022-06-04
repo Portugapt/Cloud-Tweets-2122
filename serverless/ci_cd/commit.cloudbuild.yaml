@@ -3,7 +3,7 @@ steps:
     args: [
       'builds',
       'submit',
-      '--config=functions/ci_cd/unit_tests.cloudbuild.yaml',
+      '--config=serverless/functions/ci_cd/unit_tests.cloudbuild.yaml',
     ]
     id: 'unittests'
     waitFor: ['-']
