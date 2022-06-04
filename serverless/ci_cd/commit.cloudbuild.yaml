@@ -1,0 +1,9 @@
+steps:
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'builds',
+      'submit',
+      '--config=functions/ci_cd/unit_tests.cloudbuild.yaml',
+    ]
+    id: 'unittests'
+    waitFor: ['-']

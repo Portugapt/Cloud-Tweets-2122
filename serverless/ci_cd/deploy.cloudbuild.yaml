@@ -1,0 +1,11 @@
+steps:
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+  - gcloud
+  - functions
+  - deploy
+  - admin_add_tweet
+  - --region=europe-west3
+  - --source=./serverless/functions/admin_add_tweet/app
+  - --trigger-http
+  - --runtime=python39
