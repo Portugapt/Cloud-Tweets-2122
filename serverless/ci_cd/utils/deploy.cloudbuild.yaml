@@ -9,4 +9,4 @@ images: ['${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils']
 timeout: 3600s
 
 substitutions:
-  TAG_NAME_1: TEST_TAG
+  TAG_NAME_1: utils-build
