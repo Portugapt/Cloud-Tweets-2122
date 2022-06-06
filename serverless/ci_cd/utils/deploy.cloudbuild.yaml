@@ -6,7 +6,7 @@ steps:
     - |-
       docker build - t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:latest \
         -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:${COMMIT_SHA} 
-        serverless/ci_cd/utils/.
+        serverless/ci_cd/utils/Dockerfile
     id: 'build-python-utils'
     waitFor: ['-']
 
