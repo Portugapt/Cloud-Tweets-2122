@@ -1,4 +1,4 @@
-autopep8                      1.6.0
+autopep8==1.6.0
 deepdiff==5.8.1
 Flask==1.1.4
 flask-unittest==0.1.2
