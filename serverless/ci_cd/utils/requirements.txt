@@ -20,6 +20,8 @@ grpcio==1.44.0
 grpcio-tools==1.44.0
 gsutil==5.8
 gunicorn==20.1.0
+Jinja2==2.11.3
+MarkupSafe==2.0.1
 mypy==0.960
 pytz==2022.1
 unittest2==1.1.0
