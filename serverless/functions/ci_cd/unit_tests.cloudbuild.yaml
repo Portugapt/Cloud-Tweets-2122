@@ -6,4 +6,4 @@ steps:
     waitFor: ['-']
 
 substitutions:
-  TRIGGER_NAME: cf-unittests
+  _TRIGGER_NAME: cf-unittests
