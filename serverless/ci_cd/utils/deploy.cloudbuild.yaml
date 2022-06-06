@@ -5,7 +5,7 @@ steps:
     - '-c'
     - |-
       docker build - t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:latest \
-        -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:${COMMIT_SHA} 
+        -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:${COMMIT_SHA} \
         .
     id: 'build-python-utils'
     waitFor: ['-']
