@@ -1,5 +1,7 @@
 steps:
   - name: 'gcr.io/cloud-builders/gcloud'
+    env:
+      - "TRIGGER_NAME=cf-unittests"
     args: [
       'builds',
       'submit',
