@@ -6,4 +6,6 @@ steps:
     waitFor: ['-']
 
 substitutions:
-  _PROJECT: ${PROJECT}
+  _PROJECT: ${_PROJECT}
+  _LOCATION: ${_LOCATION}
+  TRIGGER_NAME: ${TRIGGER_NAME}
