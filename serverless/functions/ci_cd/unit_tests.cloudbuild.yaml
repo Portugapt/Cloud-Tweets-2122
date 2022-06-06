@@ -1,10 +1,9 @@
 steps:
   - name: '${LOCATION}-docker.pkg.dev/${PROJECT}/utils/python-utils'
     args: [
-      '-m', 'unittest', 'serverless/functions/admin_add_tweet/tests/test_main.py']
+      '-m', 'unittest', 'serverless/functions/admin_add_tweet/tests/test_main.py',]
     id: 'unit-tests-admin-add-tweet'
     waitFor: ['-']
 
 substitutions:
-  TAG_NAME: unittests
   TRIGGER_NAME: cf-unittests
