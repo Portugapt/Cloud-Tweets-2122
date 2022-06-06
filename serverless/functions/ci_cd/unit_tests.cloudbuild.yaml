@@ -8,4 +8,3 @@ steps:
 substitutions:
   _PROJECT: ${_PROJECT}
   _LOCATION: ${_LOCATION}
-  _TRIGGER_NAME: cf-unittests
