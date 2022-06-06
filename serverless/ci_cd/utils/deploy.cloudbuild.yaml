@@ -4,9 +4,7 @@ steps:
     args:
     - '-c'
     - |-
-      docker build -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:latest \
-        -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:${COMMIT_SHA} \
-        .
+      docker build -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:latest .
     id: 'build-python-utils'
     waitFor: ['-']
 
