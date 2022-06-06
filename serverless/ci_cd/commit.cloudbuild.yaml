@@ -1,12 +1,10 @@
 steps:
   - name: 'gcr.io/cloud-builders/gcloud'
-    env:
-      - "TRIGGER_NAME=cf-unittests"
     args: [
       'builds',
       'submit',
       '--config=serverless/functions/ci_cd/unit_tests.cloudbuild.yaml',
-      '--substitutions=_TRIGGER_NAME="cf-unittests",_PROJECT=${PROJECT},_LOCATION=${LOCATION}'
+      '--substitutions=TRIGGER_NAME=${TRIGGER_NAME}'
     ]
     id: 'unittests'
     waitFor: ['-']
