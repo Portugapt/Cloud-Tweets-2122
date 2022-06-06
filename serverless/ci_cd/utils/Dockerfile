@@ -1,6 +1,6 @@
 FROM python:3.8.12
 
-COPY requirements.txt .
+COPY serverless/ci_cd/utils/requirements.txt .
 
 RUN apt-get update -q update && apt-get -q install python3 python3-pip
 
