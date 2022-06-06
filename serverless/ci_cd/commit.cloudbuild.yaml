@@ -6,7 +6,7 @@ steps:
       'builds',
       'submit',
       '--config=serverless/functions/ci_cd/unit_tests.cloudbuild.yaml',
-      '--substitutions=_TRIGGER_NAME="cf-unittests"'
+      '--substitutions=_TRIGGER_NAME="cf-unittests",_PROJECT=${PROJECT},_LOCATION=${LOCATION}'
     ]
     id: 'unittests'
     waitFor: ['-']
