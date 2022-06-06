@@ -8,4 +8,4 @@ steps:
 substitutions:
   _PROJECT: ${_PROJECT}
   _LOCATION: ${_LOCATION}
-  TRIGGER_NAME: ${TRIGGER_NAME}
+  _TRIGGER_NAME: ${_TRIGGER_NAME}
