@@ -1,12 +1,6 @@
 steps:
-  - name: gcr.io/cloud-builders/docker
-    entrypoint: bash
-    args:
-    - '-c'
-    - |-
-      docker build -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:latest serverless/ci_cd/utils/.
-    id: 'build-python-utils'
-    waitFor: ['-']
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils', 'serverless/ci_cd/utils/.' ]
 
 images: ['${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils']
 
