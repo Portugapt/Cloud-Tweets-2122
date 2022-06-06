@@ -1,0 +1,15 @@
+steps:
+  - name: 'gcr.io/google.com/cloud-builders/docker'
+    entrypoint: bash
+    args:
+    - '-c'
+    - |-
+      docker build - t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:latest \
+        -t ${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils:${COMMIT_SHA} 
+        serverless/ci_cd/utils/
+    id: 'build-python-utils'
+    waitFor: ['-']
+
+images: ['${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils']
+
+timeout: 3600s
