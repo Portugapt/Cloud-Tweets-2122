@@ -1,7 +1,12 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
+  env: 
+    - "TAG_NAME=$TAG_NAME_1"
   args: [ 'build', '-t', '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils', 'serverless/ci_cd/utils/.' ]
 
 images: ['${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils']
 
 timeout: 3600s
+
+substitutions:
+  TAG_NAME_1: TEST_TAG
