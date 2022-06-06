@@ -1,5 +1,5 @@
 steps:
-  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
+  - name: '${LOCATION}-docker.pkg.dev/${PROJECT}/utils/python-utils'
     args: [
       '-m', 'unittest', 'serverless/functions/admin_add_tweet/tests/test_main.py',]
     id: 'unit-tests-admin-add-tweet'
