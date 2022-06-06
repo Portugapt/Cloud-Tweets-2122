@@ -2,6 +2,7 @@ autopep8==1.6.0
 deepdiff==5.8.1
 Flask==1.1.4
 flask-unittest==0.1.2
+functions_framework==3.0.0
 gcs-oauth2-boto-plugin==3.0
 google-api-core==2.7.1
 google-apitools==0.5.32
