@@ -17,4 +17,4 @@ services/keys/*
 
 **/pythonBigQuery_credentials.json*
 
-./venv/
+venv/**
