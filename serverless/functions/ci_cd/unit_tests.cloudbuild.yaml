@@ -5,6 +5,30 @@ steps:
     id: 'unit-tests-admin-add-tweet'
     waitFor: ['-']
 
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
+    args: [
+      '-m', 'unittest', 'serverless/functions/admin_delete_tweet/tests/test_main.py',]
+    id: 'unit-tests-admin-delete-tweet'
+    waitFor: ['-']
+  
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
+    args: [
+      '-m', 'unittest', 'serverless/functions/auth/tests/test_main.py',]
+    id: 'unit-tests-auth'
+    waitFor: ['-']
+
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
+    args: [
+      '-m', 'unittest', 'serverless/functions/clear_tweet_list/tests/test_main.py',]
+    id: 'unit-tests-clear-tweet-list'
+    waitFor: ['-']
+  
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
+    args: [
+      '-m', 'unittest', 'serverless/functions/list_tweet_language/tests/test_main.py',]
+    id: 'unit-tests-listtweet_language'
+    waitFor: ['-']
+
 substitutions:
   _PROJECT: ${_PROJECT}
   _LOCATION: ${_LOCATION}
