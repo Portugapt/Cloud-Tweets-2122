@@ -1,4 +1,3 @@
-import logging
 import os
 import random
 from typing import Any, List
@@ -15,6 +14,7 @@ def _create_app():
 
     return Flask(__name__)
 
+app = _create_app()
 
 def _query_add_tweet(request: Request):
     print('INFO: functions.admin_add_tweet.app.main._query_add_tweet')
@@ -70,7 +70,7 @@ def _valid_request(request: Request) -> List[bool]:
     return argument_present
 
 
-def _request_login(request: Request, AUTH_SERVER: str) -> int:
+def _request_authentication(request: Request, AUTH_SERVER: str) -> int:
     print('INFO: functions.admin_add_tweet.app.main._request_login')
 
     username = request.args.get("username")
@@ -86,24 +86,30 @@ def _request_login(request: Request, AUTH_SERVER: str) -> int:
 def main(request: Any):
     print('INFO: functions.admin_add_tweet.app.main.main')
 
-    app = _create_app()
+    url_auth = os.getenv("AUTH_FUNCTION_URL", "http://localhost:8081")
 
-    url = os.getenv("AUTH_FUNCTION_URL", "http://localhost:8081")
+    auth = _request_authentication(request, url_auth)
 
     if not all(_valid_request(request)):
         response = app.response_class(
             response="Querystring parameters: username, password, tweetusername and tweettext",
             status=400
         )
-    elif _request_login(request, url) == 200:
+    elif auth == 200:
         tweetId = _query_add_tweet(request)
         response = app.response_class(
             response="Authorized, tweetId created:" + str(tweetId),
             status=200
         )
-    else:
+    elif auth == 401:
         response = app.response_class(
             response="Unauthorized",
             status=401
         )
+    else:
+        response = app.response_class(
+            response="An error happened",
+            status=404
+        )
+    
     return response

@@ -1,6 +1,5 @@
-google-cloud
-google-cloud-bigquery
-grpcio-tools
+grpcio-tools ~= 1.30
+grpc_interceptor ~= 0.11.0
 Flask==1.1.4
 gunicorn==20.1.0
 Jinja2==2.11.3

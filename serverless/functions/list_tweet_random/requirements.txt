@@ -1,0 +1,6 @@
+google-cloud
+google-cloud-bigquery
+grpcio-tools
+flask
+Jinja2
+markupsafe
