@@ -26,3 +26,6 @@ MarkupSafe==2.0.1
 mypy==0.960
 pytz==2022.1
 unittest2==1.1.0
+
+pulumi>=3.0.0,<4.0.0
+pulumi-gcp>=6.0.0,<7.0.0
