@@ -11,7 +11,7 @@ steps:
     id: 'add-to-storage-admin-add-tweet'
     waitFor: ['zip-admin-add-tweet']
 
-  - name: 'gcr.io/cloud-builders/gsutil'
+  - name: 'gcr.io/cloud-builders/gcloud'
     args: ['gcloud', 'functions', 'deploy', 
             '--region=europe-west1',
             '--runtime=python38',
