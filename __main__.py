@@ -24,7 +24,8 @@ dataset_tweets = bigquery.Dataset(resource_name='bq_cloud_2122',
                                   labels={'type': 'bq-dataset', 'env': 'default'})
 
 db_admin_user = bigquery.Table(resource_name='db_admin_user',
-                               opts=pulumi.ResourceOptions(protect=True),
+                               opts=pulumi.ResourceOptions(protect=True,
+                                                           depends_on=[dataset_tweets]),
                                location='europe-west1',
                                dataset_id=dataset_tweets.dataset_id,
                                tabel_id='db_admin_user',
