@@ -4,7 +4,7 @@ steps:
       'builds',
       'submit',
       '--config=pulumi.cloudbuild.yaml',
-      '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT}'
+      '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT},_BUILD_TYPE=${_BUILD_TYPE}'
     ]
     id: 'pulumi'
     waitFor: ['-']
@@ -22,3 +22,4 @@ steps:
 substitutions:
   _PROJECT: tweets-cadeira-2122
   _LOCATION: europe-west1
+  _BUILD_TYPE: up
