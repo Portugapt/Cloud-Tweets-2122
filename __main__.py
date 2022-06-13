@@ -48,8 +48,16 @@ db_admin_user = bigquery.Table(resource_name='db_admin_user',
 db_global = bigquery.Table(resource_name='db_global',
                                opts=pulumi.ResourceOptions(protect=True,
                                                            depends_on=[dataset_tweets]),
-                               location='europe-west1',
                                dataset_id=dataset_tweets.dataset_id,
                                tabel_id='db_global',
                                friendly_name='db_global',
                                schema=_load_json_schema('resources/db_global_schema.json'))
+
+db_readfiles = bigquery.Table(resource_name='db_readfiles',
+                               opts=pulumi.ResourceOptions(protect=True,
+                                                           depends_on=[dataset_tweets]),
+                               dataset_id=dataset_tweets.dataset_id,
+                               tabel_id='db_readfiles',
+                               friendly_name='db_readfiles',
+                               schema=_load_json_schema('resources/db_readfiles_schema.json'))
+
