@@ -1,5 +1,5 @@
 steps:
-- name: '${LOCATION}-docker.pkg.dev/${PROJECT}/utils/python-utils'
+- name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
   entrypoint: /bin/sh
   args:
   - '-c'
@@ -14,3 +14,7 @@ availableSecrets:
   secretManager:
   - versionName: projects/63397135473/secrets/pulumi-key/versions/2
     env: 'PULUMI_ACCESS_TOKEN'
+
+substitution:
+  _LOCATION: ${LOCATION}
+  _PROJECT: ${PROJECT}
