@@ -16,3 +16,8 @@ grpcio-tools >= 1.30
 # Data
 
 pyspark>=3.1.2
+
+# IaC
+
+pulumi>=3.0.0,<4.0.0
+pulumi-gcp>=6.0.0,<7.0.0

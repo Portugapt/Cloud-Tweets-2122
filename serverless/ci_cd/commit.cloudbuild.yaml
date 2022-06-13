@@ -10,5 +10,5 @@ steps:
     waitFor: ['-']
 
 substitutions:
-  _PROJECT: cadeira-nuvem-2122
+  _PROJECT: tweets-cadeira-2122
   _LOCATION: europe-west1
