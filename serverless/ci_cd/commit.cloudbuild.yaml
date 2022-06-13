@@ -3,11 +3,21 @@ steps:
     args: [
       'builds',
       'submit',
+      '--config=pulumi.cloudbuild.yaml',
+      '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT}'
+    ]
+    id: 'pulumi'
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'builds',
+      'submit',
       '--config=serverless/functions/ci_cd/unit_tests.cloudbuild.yaml',
       '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT}'
     ]
     id: 'unittests'
-    waitFor: ['-']
+    waitFor: ['pulumi']
 
 substitutions:
   _PROJECT: tweets-cadeira-2122
