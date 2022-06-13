@@ -18,3 +18,4 @@ services/keys/*
 **/pythonBigQuery_credentials.json*
 
 venv/**
+test.py
