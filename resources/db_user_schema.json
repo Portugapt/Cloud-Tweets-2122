@@ -1,0 +1,45 @@
+[
+    {
+      "description": "Unique Identifier of User",
+      "mode": "NULLABLE",
+      "name": "userId",
+      "type": "INT64"
+    },
+    {
+        "description": "Date of account creation",
+        "mode": "NULLABLE",
+        "name": "usercreatedts",
+        "type": "TIMESTAMP"
+    },
+    {
+      "description": "Username of User",
+      "mode": "NULLABLE",
+      "name": "username",
+      "type": "STRING"
+    },
+    {
+      "description": "Account Description",
+      "mode": "NULLABLE",
+      "name": "acctdesc",
+      "type": "STRING"
+    },
+    {
+        "description": "Number of followed accounts",
+        "mode": "NULLABLE",
+        "name": "n_following",
+        "type": "INT64"
+    },
+    {
+        "description": "Number of following accounts",
+        "mode": "NULLABLE",
+        "name": "n_followers",
+        "type": "INT64"
+    },
+    {
+        "description": "Total Number of Tweets",
+        "mode": "NULLABLE",
+        "name": "n_totaltweets",
+        "type": "INT64"
+    }
+  ]
+  

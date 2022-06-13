@@ -1,0 +1,111 @@
+[
+    { 
+        "description": "Row ID", 
+        "mode": "NULLABLE",
+        "name": "rowID",
+        "type": "INT64"
+    },
+    {
+        "description": "Unique Identifier of Owner User",
+        "mode": "NULLABLE",
+        "name": "userId",
+        "type": "INT64"
+    },
+    {
+        "description": "Username of User",
+        "mode": "NULLABLE",
+        "name": "username",
+        "type": "STRING"
+    },
+    {
+        "description": "Account Description",
+        "mode": "NULLABLE",
+        "name": "acctdesc",
+        "type": "STRING"
+    },
+    {
+      "description": "Location where the tweet was sent from",
+      "mode": "NULLABLE",
+      "name": "location",
+      "type": "STRING"
+    },
+    {
+          "description": "Number of followed accounts",
+          "mode": "NULLABLE",
+          "name": "n_following",
+          "type": "INT64"
+    },
+    {
+          "description": "Number of following accounts",
+          "mode": "NULLABLE",
+          "name": "n_followers",
+          "type": "INT64"
+    },
+    {
+          "description": "Total Number of Tweets",
+          "mode": "NULLABLE",
+          "name": "n_totaltweets",
+          "type": "INT64"
+    },
+    {
+        "description": "Date of account creation",
+        "mode": "NULLABLE",
+        "name": "usercreatedts",
+        "type": "TIMESTAMP"
+    },
+    {
+      "description": "Unique Identifier of Tweet",
+      "mode": "NULLABLE",
+      "name": "tweetId",
+      "type": "INT64"
+    },
+    {
+        "description": "Date of tweet creation",
+        "mode": "NULLABLE",
+        "name": "tweetcreatedts",
+        "type": "TIMESTAMP"
+    },
+    {
+        "description": "Number of retweets",
+        "mode": "NULLABLE",
+        "name": "retweetcount",
+        "type": "INT64"
+    },
+    {
+        "description": "The Tweet text",
+        "mode": "NULLABLE",
+        "name": "tweettext",
+        "type": "STRING"
+    },
+    {
+        "description": "Tweet hashtags and locations",
+        "mode": "NULLABLE",
+        "name": "hashtags",
+        "type": "STRING"
+    },
+    {
+        "description": "Main language of the tweet",
+        "mode": "NULLABLE",
+        "name": "language",
+        "type": "STRING"
+    },
+    {
+        "description": "Where the tweet was sent from",
+        "mode": "NULLABLE",
+        "name": "coordinates",
+        "type": "STRING"
+    },
+    {
+        "description": "Number of users who favourited tweet",
+        "mode": "NULLABLE",
+        "name": "favouritecount",
+        "type": "INT64"
+    },
+    {
+        "description": "Date of extraction from twitter api",
+        "mode": "NULLABLE",
+        "name": "extractedts",
+        "type": "TIMESTAMP"
+    }
+  ]
+  
