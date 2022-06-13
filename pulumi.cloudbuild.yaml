@@ -15,6 +15,6 @@ availableSecrets:
   - versionName: projects/63397135473/secrets/pulumi-key/versions/2
     env: 'PULUMI_ACCESS_TOKEN'
 
-substitution:
+substitutions:
   _LOCATION: ${LOCATION}
   _PROJECT: ${PROJECT}
