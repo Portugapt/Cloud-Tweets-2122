@@ -33,4 +33,4 @@ substitutions:
   _PROJECT: ${_PROJECT}
   _LOCATION: ${_LOCATION}
 
-tags: ['functions', 'unit tests']
+tags: ['functions', 'unit-tests']
