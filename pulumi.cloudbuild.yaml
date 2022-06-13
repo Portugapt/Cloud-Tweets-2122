@@ -1,5 +1,5 @@
 steps:
-- name: 'gcr.io/cloud-builders/yarn'
+- name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
   entrypoint: /bin/sh
   args:
   - '-c'
