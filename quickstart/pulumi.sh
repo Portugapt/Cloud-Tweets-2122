@@ -15,7 +15,7 @@ yarn install
 pulumi login
 
 # Select the appropriate stack.
-pulumi stack select praneetloke/gcp-functions/dev
+pulumi stack select Portugapt/tweets/dev
 
 case $BUILD_TYPE in
   PullRequest)
