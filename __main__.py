@@ -30,4 +30,4 @@ db_admin_user = bigquery.Table(resource_name='db_admin_user',
                                dataset_id=dataset_tweets.dataset_id,
                                tabel_id='db_admin_user',
                                friendly_name='db_admin_user',
-                               schema=json.load('resources/db_global_schema.json'))
+                               schema=json.loads('resources/db_global_schema.json'))
