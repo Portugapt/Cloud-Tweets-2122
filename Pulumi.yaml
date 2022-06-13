@@ -1,6 +1,4 @@
 name: tweets
 runtime:
   name: python
-  options:
-    virtualenv: venv
 description: Tweets IaC Cadeira Nuvem 2122
