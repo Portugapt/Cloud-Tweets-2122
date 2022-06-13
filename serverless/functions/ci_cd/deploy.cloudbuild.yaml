@@ -1,7 +1,22 @@
 steps:
-- name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
-  args: ['admin_add_tweet.zip', 
-         'serverless/functions/admin_add_tweet/app/main.py',
-         'serverless/functions/admin_add_tweet/requirements.txt',]
-  id: 'zip-admin-add-tweet'
-  waitFor: ['-']
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['admin_add_tweet.zip', 
+          'serverless/functions/admin_add_tweet/app/main.py',
+          'serverless/functions/admin_add_tweet/requirements.txt',]
+    id: 'zip-admin-add-tweet'
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'admin_add_tweet.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-admin-add-tweet'
+    waitFor: ['zip-admin-add-tweet']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['gcloud', 'functions', 'deploy', 
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfunctions-zip/admin_add_tweet.zip',
+            '--env-vars-file serverless/functions/.env-admin.yaml']
+    id: 'deploy-admin-add-tweet'
+    waitFor: ['zip-admin-add-tweet']

@@ -17,7 +17,7 @@ steps:
       '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT}'
     ]
     id: 'unittests'
-    waitFor: ['pulumi']
+    waitFor: ['-']
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
@@ -27,7 +27,7 @@ steps:
       '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT}'
     ]
     id: 'deploy-functions'
-    waitFor: ['unittests']
+    waitFor: ['unittests', 'pulumi']
 
 substitutions:
   _PROJECT: tweets-cadeira-2122
