@@ -7,5 +7,10 @@ steps:
   env:
   # We use substitution for an example. Your Pulumi access token is sensitive and as such should be encrypted.
   # See the Encrypted Variables section below on how to do that.
-  - 'PULUMI_ACCESS_TOKEN=$_INSECURE_SUBSTITUTION_PULUMI_ACCESS_TOKEN'
+  - 'PULUMI_ACCESS_TOKEN=$_PULUMI_ACCESS_TOKEN'
   - 'BUILD_TYPE=$_BUILD_TYPE'
+
+availableSecrets:
+  secretManager:
+  - versionName: projects/63397135473/secrets/pulumi-key/versions/1
+env: '_PULUMI_ACCESS_TOKEN'
