@@ -13,4 +13,4 @@ steps:
 availableSecrets:
   secretManager:
   - versionName: projects/63397135473/secrets/pulumi-key/versions/1
-env: '_PULUMI_ACCESS_TOKEN'
+    env: '_PULUMI_ACCESS_TOKEN'
