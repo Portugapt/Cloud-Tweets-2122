@@ -17,11 +17,11 @@ steps:
     id: 'unit-tests-auth'
     waitFor: ['-']
 
-  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
-    args: [
-      '-m', 'unittest', 'serverless/functions/clear_tweet_list/tests/test_main.py',]
-    id: 'unit-tests-clear-tweet-list'
-    waitFor: ['-']
+#  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
+#    args: [
+#      '-m', 'unittest', 'serverless/functions/clear_tweet_list/tests/test_main.py',]
+#    id: 'unit-tests-clear-tweet-list'
+#    waitFor: ['-']
   
 #  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
 #    args: [

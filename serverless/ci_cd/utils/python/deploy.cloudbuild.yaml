@@ -1,0 +1,10 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 
+          '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils', 
+          'serverless/ci_cd/utils/python/.' ]
+
+images: ['${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/python-utils']
+
+timeout: 3600s
+

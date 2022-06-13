@@ -19,6 +19,16 @@ steps:
     id: 'unittests'
     waitFor: ['pulumi']
 
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'builds',
+      'submit',
+      '--config=serverless/functions/ci_cd/unit_tests.cloudbuild.yaml',
+      '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT}'
+    ]
+    id: 'deploy-functions'
+    waitFor: ['unittests']
+
 substitutions:
   _PROJECT: tweets-cadeira-2122
   _LOCATION: europe-west1
