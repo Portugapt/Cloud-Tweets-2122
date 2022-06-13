@@ -1,2 +1,3 @@
 config:
   gcp:project: tweets-cadeira-2122
+  gcp:location: europe-west1
