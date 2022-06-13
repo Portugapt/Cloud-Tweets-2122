@@ -1,8 +1,7 @@
 import unittest
+
 import deepdiff
-
-from flask import Request, Flask
-
+from flask import Flask, Request
 from serverless.functions.admin_delete_tweet.app import main
 
 testapp = Flask(__name__)
@@ -38,7 +37,7 @@ class TestAdminDeleteTweet(unittest.TestCase):
 
         request = Request.from_values(query_string={'tweetid': '999',
                                                     'password': 'test_password',
-                                                    'username': 'test_user',})
+                                                    'username': 'test_user', })
 
         actual = main._valid_request(request)
         expected = [True, True, True]

@@ -1,16 +1,12 @@
+import logging
 import os
-import random
+from typing import Any, List
 
+import functions_framework
+import requests
+from flask import Flask, Request
 from google.cloud import bigquery
 from google.oauth2 import service_account
-
-from typing import Any, List
-from flask import Flask, Request
-import functions_framework
-
-import requests
-
-import logging
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)

@@ -1,15 +1,11 @@
+import logging
 import os
-
-from flask import Flask, Request
-
 from typing import List
 
 import functions_framework
-
+from flask import Flask, Request
 from google.cloud import bigquery
 from google.oauth2 import service_account
-
-import logging
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
