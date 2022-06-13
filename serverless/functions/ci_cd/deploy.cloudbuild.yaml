@@ -17,6 +17,6 @@ steps:
             '--runtime=python38',
             '--trigger-http',
             '--source=gs://tweets-cloudfunctions-zip/admin_add_tweet.zip',
-            '--env-vars-file serverless/functions/.env-admin.yaml']
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-admin-add-tweet'
     waitFor: ['zip-admin-add-tweet']
