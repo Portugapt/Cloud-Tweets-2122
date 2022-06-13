@@ -13,6 +13,7 @@ steps:
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 
+            'admin-add-tweet',
             '--region=europe-west1',
             '--runtime=python38',
             '--trigger-http',
