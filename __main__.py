@@ -30,4 +30,13 @@ db_admin_user = bigquery.Table(resource_name='db_admin_user',
                                dataset_id=dataset_tweets.dataset_id,
                                tabel_id='db_admin_user',
                                friendly_name='db_admin_user',
+                               schema=json.loads('resources/db_admin_user_schema.json'))
+
+db_global = bigquery.Table(resource_name='db_global',
+                               opts=pulumi.ResourceOptions(protect=True,
+                                                           depends_on=[dataset_tweets]),
+                               location='europe-west1',
+                               dataset_id=dataset_tweets.dataset_id,
+                               tabel_id='db_global',
+                               friendly_name='db_global',
                                schema=json.loads('resources/db_global_schema.json'))
