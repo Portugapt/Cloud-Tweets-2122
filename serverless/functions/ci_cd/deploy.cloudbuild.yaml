@@ -1,11 +1,7 @@
 steps:
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args:
-  - gcloud
-  - functions
-  - deploy
-  - admin_add_tweet
-  - --region=europe-west3
-  - --source=./serverless/functions/admin_add_tweet/app
-  - --trigger-http
-  - --runtime=python39
+- name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+  args: ['admin_add_tweet.zip', 
+         'serverless/functions/admin_add_tweet/app/main.py',
+         'serverless/functions/admin_add_tweet/requirements.txt',]
+  id: 'zip-admin-add-tweet'
+  waitFor: ['-']

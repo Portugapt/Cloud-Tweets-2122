@@ -2,6 +2,8 @@ import os
 
 from flask import Flask, Request
 
+from typing import List
+
 import functions_framework
 
 from google.cloud import bigquery

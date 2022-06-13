@@ -11,6 +11,11 @@ bucket_lz = storage.Bucket(resource_name='tweets-landing-zone',
                            location='EU',
                            name='tweets-landing-zone')
 
+bucket_dataproc = storage.Bucket(resource_name='tweets-cloudfunctions-zip',
+                                 opts=pulumi.ResourceOptions(protect=True),
+                                 location='EU',
+                                 name='tweets-cloudfunctions-zip')
+
 bucket_dataproc = storage.Bucket(resource_name='tweets-dataproc',
                                  opts=pulumi.ResourceOptions(protect=True),
                                  location='EU',

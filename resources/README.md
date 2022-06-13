@@ -47,7 +47,7 @@ bq mk \
 --use_legacy_sql=false \
 --description "Users View" \
 --label organization:development \
---project_id 	cadeira-nuvem-2122  \
+--project_id cadeira-nuvem-2122  \
 --view \
 'SELECT
   name,

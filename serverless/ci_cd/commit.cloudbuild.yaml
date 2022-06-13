@@ -23,7 +23,7 @@ steps:
     args: [
       'builds',
       'submit',
-      '--config=serverless/functions/ci_cd/unit_tests.cloudbuild.yaml',
+      '--config=serverless/functions/ci_cd/deploy.cloudbuild.yaml',
       '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT}'
     ]
     id: 'deploy-functions'
