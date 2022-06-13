@@ -22,10 +22,6 @@ pulumi.export('tweets-dataproc',  bucket_dataproc.url)
 
 ## Bigquery
 
-with open("resources/db_global_schema.json", "r") as file:
-    fileData  = file.read()
-    db_global_schema = json.loads(fileData)
-
 def _load_json_schema(path: str) -> str:
     with open(path, "r") as file:
         fileData  = file.read()
@@ -39,7 +35,6 @@ dataset_tweets = bigquery.Dataset(resource_name='bq_cloud_2122',
 db_admin_user = bigquery.Table(resource_name='db_admin_user',
                                opts=pulumi.ResourceOptions(protect=True,
                                                            depends_on=[dataset_tweets]),
-                               location='europe-west1',
                                dataset_id=dataset_tweets.dataset_id,
                                tabel_id='db_admin_user',
                                friendly_name='db_admin_user',
