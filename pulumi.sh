@@ -8,9 +8,6 @@ set -e -x
 curl -L https://get.pulumi.com/ | bash
 export PATH=$PATH:$HOME/.pulumi/bin
 
-# Restore npm dependencies for our infra app.
-yarn install
-
 # Login into pulumi. This will require the PULUMI_ACCESS_TOKEN environment variable.
 pulumi login
 
