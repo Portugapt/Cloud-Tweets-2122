@@ -4,7 +4,7 @@ from pulumi_gcp import storage, bigquery
 
 # Create a GCP resource (Storage Bucket)
 bucket_lz = storage.Bucket(resource_name='tweets-landing-zone',
-                           opts=pulumi.ResourceOptions(protect=True),
+                           #opts=pulumi.ResourceOptions(protect=True),
                            location='EU',
                            name='tweets-landing-zone')
 
