@@ -25,9 +25,7 @@ pulumi.export('tweets-dataproc',  bucket_dataproc.url)
 
 def _load_json_schema(path: str) -> List:
     with open(path, "r") as file:
-        fileData = file.read()
-        return f'"""{json.loads(fileData)}"""'
-
+        return file.read().replace('\n','')
 
 dataset_tweets = bigquery.Dataset(resource_name='bq_cloud_2122',
                                   opts=pulumi.ResourceOptions(
