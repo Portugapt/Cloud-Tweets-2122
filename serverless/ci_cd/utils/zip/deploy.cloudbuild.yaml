@@ -1,7 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 
-          '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/zil-utils',
+          '${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/zip-utils',
           'serverless/ci_cd/utils/zip/.']
 
 images: ['${LOCATION}-docker.pkg.dev/${PROJECT_ID}/utils/zip-utils']
