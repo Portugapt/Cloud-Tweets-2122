@@ -26,7 +26,7 @@ pulumi.export('tweets-dataproc',  bucket_dataproc.url)
 def _load_json_schema(path: str) -> List:
     with open(path, "r") as file:
         fileData = file.read()
-        return json.loads(fileData)
+        return f'"""{json.loads(fileData)}"""'
 
 
 dataset_tweets = bigquery.Dataset(resource_name='bq_cloud_2122',
@@ -40,35 +40,16 @@ db_admin_user = bigquery.Table(resource_name='db_admin_user',
                                opts=pulumi.ResourceOptions(protect=True),
                                dataset_id=dataset_tweets.dataset_id,
                                table_id='db_admin_user',
-                               schema="""[
-    {
-        "description": "Unique Identifier of User",
-        "mode": "NULLABLE",
-        "name": "userId",
-        "type": "INTEGER"
-    },
-    {
-        "description": "Username",
-        "mode": "NULLABLE",
-        "name": "username",
-        "type": "STRING"
-    },
-    {
-        "description": "Password",
-        "mode": "NULLABLE",
-        "name": "password",
-        "type": "STRING"
-    }
-]""")
+                               schema=_load_json_schema('resources/db_admin_user_schema.json'))
 
-# db_global = bigquery.Table(resource_name='db_global',
-#                               opts=pulumi.ResourceOptions(protect=True),
-#                               dataset_id=dataset_tweets.dataset_id,
-#                               table_id='db_global',
-#                               schema=_load_json_schema('resources/db_global_schema.json'))
+db_global = bigquery.Table(resource_name='db_global',
+                           opts=pulumi.ResourceOptions(protect=True),
+                           dataset_id=dataset_tweets.dataset_id,
+                           table_id='db_global',
+                           schema=_load_json_schema('resources/db_global_schema.json'))
 
-# db_readfiles = bigquery.Table(resource_name='db_readfiles',
-#                               opts=pulumi.ResourceOptions(protect=True),
-#                               dataset_id=dataset_tweets.dataset_id,
-#                               table_id='db_readfiles',
-#                               schema=_load_json_schema('resources/db_readfiles_schema.json'))
+db_readfiles = bigquery.Table(resource_name='db_readfiles',
+                              opts=pulumi.ResourceOptions(protect=True),
+                              dataset_id=dataset_tweets.dataset_id,
+                              table_id='db_readfiles',
+                              schema=_load_json_schema('resources/db_readfiles_schema.json'))
