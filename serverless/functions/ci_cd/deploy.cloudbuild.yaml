@@ -12,7 +12,7 @@ steps:
     waitFor: ['zip-admin-add-tweet']
 
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['gcloud', 'functions', 'deploy', 
+    args: ['functions', 'deploy', 
             '--region=europe-west1',
             '--runtime=python38',
             '--trigger-http',
