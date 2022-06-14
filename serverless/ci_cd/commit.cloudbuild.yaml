@@ -27,8 +27,7 @@ steps:
       '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT}'
     ]
     id: 'deploy-functions'
-    waitFor: ['-']
-    #waitFor: ['unittests', 'pulumi']
+    waitFor: ['unittests', 'pulumi']
 
 substitutions:
   _PROJECT: tweets-cadeira-2122
