@@ -1,6 +1,6 @@
 steps:
   - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
-    args: ['-r', 'admin_add_tweet.zip', 
+    args: ['-j', 'admin_add_tweet.zip', 
           'serverless/functions/admin_add_tweet/app/main.py',
           'serverless/functions/admin_add_tweet/requirements.txt',]
     id: 'zip-admin-add-tweet'
@@ -16,7 +16,7 @@ steps:
             'admin-add-tweet',
             '--region=europe-west1',
             '--runtime=python38',
-            '--entry-point=main',
+            '--entry-point=serverless/functions/admin_add_tweet/app/main.py',
             '--trigger-http',
             '--source=gs://tweets-cloudfunctions-zip/admin_add_tweet.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
