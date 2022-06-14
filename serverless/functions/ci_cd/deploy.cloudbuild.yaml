@@ -16,7 +16,7 @@ steps:
             'admin-add-tweet',
             '--region=europe-west1',
             '--runtime=python38',
-            '--entry-point=serverless/functions/admin_add_tweet/app/main.py',
+            '--entry-point=main.py',
             '--trigger-http',
             '--source=gs://tweets-cloudfunctions-zip/admin_add_tweet.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
