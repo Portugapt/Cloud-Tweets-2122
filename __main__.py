@@ -71,8 +71,7 @@ api_config = apigateway.ApiConfig("ukraine-functions-config",
             path="serverless/api_gateway/config.yaml",
             contents=(lambda path: base64.b64encode(open(path).read().encode()).decode())("serverless/api_gateway/config.yaml"),
         ),
-    )],
-    opts=pulumi.ResourceOptions(provider=google_beta))
+    )])
 
 
 api_gw_gateway = apigateway.Gateway("ukraine-api-gateway",
