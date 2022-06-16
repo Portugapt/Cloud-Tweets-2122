@@ -22,12 +22,12 @@ steps:
 #      '-m', 'unittest', 'serverless/functions/clear_tweet_list/tests/test_main.py',]
 #    id: 'unit-tests-clear-tweet-list'
 #    waitFor: ['-']
-  
-#  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
-#    args: [
-#      '-m', 'unittest', 'serverless/functions/list_tweet_language/tests/test_main.py',]
-#    id: 'unit-tests-listtweet_language'
-#    waitFor: ['-']
+ 
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/python-utils'
+    args: [
+      '-m', 'unittest', 'serverless/functions/list_tweet_location/tests/test_main.py',]
+    id: 'unit-tests-list_tweet_location'
+    waitFor: ['-']
 
 substitutions:
   _PROJECT: ${_PROJECT}
