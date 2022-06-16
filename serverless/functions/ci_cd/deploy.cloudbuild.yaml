@@ -147,7 +147,7 @@ steps:
             '--source=gs://tweets-cloudfunctions-zip/list_tweet_location.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-list_tweet_location'
-    waitFor: ['zip-list_tweet_location']
+    waitFor: ['add-to-storage-list_tweet_location']
 
     ## list_tweet_random pipeline
   - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
