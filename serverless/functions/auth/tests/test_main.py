@@ -1,12 +1,10 @@
 import unittest
+
 import deepdiff
-
-from flask import Request, Flask
-
+from flask import Flask, Request
 from serverless.functions.auth.app import main
 
 testapp = Flask(__name__)
-
 
 class TestAuth(unittest.TestCase):
     def test_valid_request_01(self):

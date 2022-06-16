@@ -1,30 +1,34 @@
 import logging
 import os
-
-from google.cloud import bigquery
-from google.oauth2 import service_account
-
-from flask import Flask, json
+from typing import Any, Dict, List
 
 import functions_framework
-
 import requests
-
-import logging
+from flask import Flask, json, Request
+from google.cloud import bigquery
+from google.oauth2 import service_account
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
-app = Flask(__name__)
 
-def query(language, limit):
-    key_path = os.getenv("GOOGLE_ACCOUNT_KEY", "../keys/pythonBigQuery_credentials.json")
+def _create_app():
+    print('INFO: functions.admin_delete_tweet.app.main._create_app')
 
-    credentials = service_account.Credentials.from_service_account_file(
-        key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
-    )
+    return Flask(__name__)
 
-    client = bigquery.Client(credentials=credentials, project=credentials.project_id,)
+
+app = _create_app()
+
+
+def query(request):
+    #    key_path = os.getenv("GOOGLE_ACCOUNT_KEY", "../keys/pythonBigQuery_credentials.json")
+    #
+    #    credentials = service_account.Credentials.from_service_account_file(
+    #        key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
+    #    )
+
+    client = bigquery.Client()
 
     query = """
             SELECT tweetId, username, tweettext
@@ -34,39 +38,73 @@ def query(language, limit):
 
     job_config = bigquery.QueryJobConfig(
         query_parameters=[
-            bigquery.ScalarQueryParameter("language", "STRING", language),
-            bigquery.ScalarQueryParameter("limit", "INT64", limit),
+            bigquery.ScalarQueryParameter("language", "STRING", request['language']),
+            bigquery.ScalarQueryParameter("limit", "INT64", request['limit']),
         ]
     )
-    
-    query_job = client.query(query, job_config=job_config) 
+
+    query_job = client.query(query, job_config=job_config)
 
     query_results = query_job.result()  # Waits for job to complete.
 
     results = []
 
     for row in query_results:
-        results.append({'id':row.tweetId, 'text':row.tweettext, 'user':row.username})
+        results.append(
+            {'id': row.tweetId, 'text': row.tweettext, 'user': row.username})
 
     return results
 
-@functions_framework.http
-def main(request):
+
+def _formalize_request(request: Request,
+                       default_language: str = 'US',
+                       default_limit: str = '1000') -> Dict[str, Any]:
+    print('INFO: functions.list_tweet_location.app.main._formalize_request')
+
     language = request.args.get("language")
     limit = request.args.get("limit")
 
-    if limit == None or int(limit) < 0:
-        limit = '1000'
+    argument_present = [
+        bool(i) for i in [language, limit]]
 
-    results = query(language, limit)
+    if not argument_present[0]:
+        language = default_language
+
+    if not argument_present[1]:
+        limit = default_limit
+
+    return {'location': language, 'limit': limit}
+
+def _clean_tweets(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    print('INFO: functions.list_tweet_location.app.main._clean_tweets')
 
     data = {'tweets': json.dumps(results)}
     url = os.getenv("CLEAR_LIST_FUNCTION_URL", "http://localhost:8081")
     clear_response = requests.post(url, data=data)
 
-    response = app.response_class(
-        response=clear_response,
-        status=200,
-        mimetype='application/json'
-    )
+    return clear_response
+
+@functions_framework.http
+def main(request):
+    formalized_request = _formalize_request(request)
+
+    results = query(formalized_request)
+
+    if len(results) > 0:
+        response = app.response_class(
+            response=_clean_tweets(results),
+            status=200,
+            mimetype='application/json'
+        )
+    elif len(results) == 0:
+        response = app.response_class(
+            response="No Tweets found for this languague",
+            status=204
+        )
+    else:
+        response = app.response_class(
+            response="An error happened",
+            status=404
+        )
+
     return response

@@ -1,25 +1,22 @@
 import logging
 import os
-from typing import Any, List, Dict
+from typing import Any, Dict, List
 
+import functions_framework
+import requests
+from flask import Flask, Request, json
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
-from flask import Flask, json, Request
-
-import functions_framework
-
-import requests
-
-import logging
-
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
 
 def _create_app():
     print('INFO: functions.list_tweet_location.app.main._create_app')
 
     return Flask(__name__)
+
 
 app = _create_app()
 
@@ -43,11 +40,12 @@ def _query_execution(request) -> List[Dict[str, Any]]:
 
     return _run_query(query, job_config)
 
+
 def _run_query(query: str, job_config: bigquery.QueryJobConfig) -> List[Dict[str, Any]]:
     print('INFO: functions.list_tweet_location.app.main._run_query')
-    
+
     key_path = os.getenv("GOOGLE_ACCOUNT_KEY",
-                         "../keys/pythonBigQuery_credentials.json")
+                         "No Access Key")
 
     credentials = service_account.Credentials.from_service_account_file(
         key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
@@ -60,9 +58,10 @@ def _run_query(query: str, job_config: bigquery.QueryJobConfig) -> List[Dict[str
 
     return _query_to_dictionary(query_job.result())
 
+
 def _query_to_dictionary(query_result) -> List[Dict[str, Any]]:
     print('INFO: functions.list_tweet_location.app.main._query_to_dictionary')
-    
+
     results = []
 
     for row in query_result:
@@ -71,8 +70,9 @@ def _query_to_dictionary(query_result) -> List[Dict[str, Any]]:
 
     return results
 
+
 def _formalize_request(request: Request,
-                       default_location: str = 'US',
+                       default_location: str = 'Lisbon',
                        default_limit: str = '1000') -> Dict[str, Any]:
     print('INFO: functions.list_tweet_location.app.main._formalize_request')
 
@@ -84,11 +84,12 @@ def _formalize_request(request: Request,
 
     if not argument_present[0]:
         location = default_location
-    
+
     if not argument_present[1]:
         limit = default_limit
 
     return {'location': location, 'limit': limit}
+
 
 def _clean_tweets(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     print('INFO: functions.list_tweet_location.app.main._clean_tweets')
@@ -99,9 +100,10 @@ def _clean_tweets(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
     return clear_response
 
+
 @functions_framework.http
 def list_tweet_location(request):
-    
+
     formalized_request = _formalize_request(request)
 
     results = _query_execution(formalized_request)
@@ -114,7 +116,7 @@ def list_tweet_location(request):
         )
     elif len(results) == 0:
         response = app.response_class(
-            response="No Tweets found for this languague",
+            response="No Tweets found for this location",
             status=204
         )
     else:
