@@ -1,4 +1,5 @@
 steps:
+  ## admin_add_tweets pipeline
   - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
     args: ['-j', 'admin_add_tweet.zip', 
           'serverless/functions/admin_add_tweet/app/main.py',
@@ -22,3 +23,28 @@ steps:
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-admin-add-tweet'
     waitFor: ['zip-admin-add-tweet']
+
+    ## admin_delete_tweets pipeline
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['-j', 'admin_delete_tweet.zip', 
+          'serverless/functions/admin_delete_tweet/app/main.py',
+          'serverless/functions/admin_delete_tweet/requirements.txt',]
+    id: 'zip-admin-delete-tweet'
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'admin_delete_tweet.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-admin-delete-tweet'
+    waitFor: ['zip-admin-delete-tweet']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 
+            'admin-delete-tweet',
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--entry-point=main',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfunctions-zip/admin_delete_tweet.zip',
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
+    id: 'deploy-admin-delete-tweet'
+    waitFor: ['zip-admin-delete-tweet']
