@@ -101,7 +101,7 @@ def _clean_tweets(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
 
 
 @functions_framework.http
-def list_tweet_location(request):
+def main(request):
 
     formalized_request = _formalize_request(request)
 
