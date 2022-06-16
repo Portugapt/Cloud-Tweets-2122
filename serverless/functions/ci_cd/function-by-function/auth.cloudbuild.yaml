@@ -1,0 +1,28 @@
+steps:
+    ## auth pipeline
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['-j', 'auth.zip', 
+          'serverless/functions/auth/app/main.py',
+          'serverless/functions/auth/requirements.txt',]
+    id: 'zip-auth'
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'auth.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-auth'
+    waitFor: ['zip-auth']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 
+            'auth',
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--entry-point=main',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfunctions-zip/auth.zip',
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
+    id: 'deploy-auth'
+    waitFor: ['add-to-storage-auth']
+
+
+tags: ['functions','deploy', 'auth']
