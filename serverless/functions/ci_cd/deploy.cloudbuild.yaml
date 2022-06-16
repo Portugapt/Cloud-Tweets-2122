@@ -30,7 +30,7 @@ steps:
           'serverless/functions/admin_delete_tweet/app/main.py',
           'serverless/functions/admin_delete_tweet/requirements.txt',]
     id: 'zip-admin-delete-tweet'
-    waitFor: ['-']
+    waitFor: ['deploy-admin-add-tweet']
 
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'cp', 'admin_delete_tweet.zip', 'gs://tweets-cloudfunctions-zip']
@@ -55,7 +55,7 @@ steps:
           'serverless/functions/auth/app/main.py',
           'serverless/functions/auth/requirements.txt',]
     id: 'zip-auth'
-    waitFor: ['-']
+    waitFor: ['deploy-admin-delete-tweet']
 
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'cp', 'auth.zip', 'gs://tweets-cloudfunctions-zip']
@@ -80,7 +80,7 @@ steps:
           'serverless/functions/clear_tweet_list/app/main.py',
           'serverless/functions/clear_tweet_list/requirements.txt',]
     id: 'zip-clear_tweet_list'
-    waitFor: ['-']
+    waitFor: ['deploy-auth']
 
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'cp', 'clear_tweet_list.zip', 'gs://tweets-cloudfunctions-zip']
@@ -105,7 +105,7 @@ steps:
           'serverless/functions/list_tweet_language/app/main.py',
           'serverless/functions/list_tweet_language/requirements.txt',]
     id: 'zip-list_tweet_language'
-    waitFor: ['-']
+    waitFor: ['deploy-clear_tweet_list']
 
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'cp', 'list_tweet_language.zip', 'gs://tweets-cloudfunctions-zip']
@@ -155,7 +155,7 @@ steps:
           'serverless/functions/list_tweet_random/app/main.py',
           'serverless/functions/list_tweet_random/requirements.txt',]
     id: 'zip-list_tweet_random'
-    waitFor: ['-']
+    waitFor: ['deploy-list_tweet_location']
 
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'cp', 'list_tweet_random.zip', 'gs://tweets-cloudfunctions-zip']
@@ -170,9 +170,61 @@ steps:
             '--runtime=python38',
             '--entry-point=main',
             '--trigger-http',
-            '--source=gs://tweets-cloudfunctions-zip/list_tweet_random.zip',
+            '--source=gs://tweets-cloudfu nctions-zip/list_tweet_random.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-list_tweet_random'
     waitFor: ['add-to-storage-list_tweet_random']
+
+    ## list_tweet_search pipeline
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['-j', 'list_tweet_search.zip', 
+          'serverless/functions/list_tweet_search/app/main.py',
+          'serverless/functions/list_tweet_search/requirements.txt',]
+    id: 'zip-list_tweet_search'
+    waitFor: ['deploy-list_tweet_random']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'list_tweet_search.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-list_tweet_search'
+    waitFor: ['zip-list_tweet_search']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 
+            'list_tweet_search',
+            '--allow-unauthenticated',
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--entry-point=main',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfu nctions-zip/list_tweet_search.zip',
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
+    id: 'deploy-list_tweet_search'
+    waitFor: ['add-to-storage-list_tweet_search']
+
+    ## list_tweet_username pipeline
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['-j', 'list_tweet_username.zip', 
+          'serverless/functions/list_tweet_username/app/main.py',
+          'serverless/functions/list_tweet_username/requirements.txt',]
+    id: 'zip-list_tweet_username'
+    waitFor: ['deploy-list_tweet_search']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'list_tweet_username.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-list_tweet_username'
+    waitFor: ['zip-list_tweet_username']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 
+            'list_tweet_username',
+            '--allow-unauthenticated',
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--entry-point=main',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfu nctions-zip/list_tweet_username.zip',
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
+    id: 'deploy-list_tweet_username'
+    waitFor: ['add-to-storage-list_tweet_username']
 
 tags: ['functions','deploy']

@@ -1,0 +1,33 @@
+steps:
+    ## list_tweet_search pipeline
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['-j', 'list_tweet_search.zip', 
+          'serverless/functions/list_tweet_search/app/main.py',
+          'serverless/functions/list_tweet_search/requirements.txt',]
+    id: 'zip-list_tweet_search'
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'list_tweet_search.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-list_tweet_search'
+    waitFor: ['zip-list_tweet_search']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 
+            'list_tweet_search',
+            '--allow-unauthenticated',
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--entry-point=main',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfu nctions-zip/list_tweet_search.zip',
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
+    id: 'deploy-list_tweet_search'
+    waitFor: ['add-to-storage-list_tweet_search']
+
+
+substitutions:
+  _PROJECT: tweets-cadeira-2122
+  _LOCATION: europe-west1
+
+tags: ['functions','deploy', 'list-tweet-search']
