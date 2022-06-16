@@ -18,13 +18,8 @@ logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
 
-key_path = os.getenv("GOOGLE_ACCOUNT_KEY", "../keys/pythonBigQuery_credentials.json")
-
 def query():
-    credentials = service_account.Credentials.from_service_account_file(
-        key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
-    )
-    client = bigquery.Client(credentials=credentials, project=credentials.project_id,)
+    client = bigquery.Client()
 
     query = """
             SELECT tweetId, username, tweettext
