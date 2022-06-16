@@ -12,7 +12,7 @@ class TestListTweetLocation(unittest.TestCase):
     def test_formalize_request_01(self):
         request = Request.from_values(query_string={})
         actual = main._formalize_request(request)
-        expected = {'location': 'US', 'limit': '1000'}
+        expected = {'location': 'Lisbon', 'limit': '1000'}
 
         self.assertEqual(first={}, second=deepdiff.DeepDiff(actual, expected))
     
