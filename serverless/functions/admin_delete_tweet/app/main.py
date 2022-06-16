@@ -85,8 +85,7 @@ def main(request: Any):
                     response="Querystring parameters: username, password and tweetid",
                     status=400
                 )
-
-    if auth == 200:
+    elif auth == 200:
         _query_job(request)
         response =  app.response_class(
                     response="Authorized",
