@@ -1,13 +1,13 @@
 steps:
-#  - name: 'gcr.io/cloud-builders/gcloud'
-#    args: [
-#      'builds',
-#      'submit',
-#      '--config=pulumi.cloudbuild.yaml',
-#      '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT},_BUILD_TYPE=${_BUILD_TYPE}'
-#    ]
-#    id: 'pulumi'
-#    waitFor: ['-']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+      'builds',
+      'submit',
+      '--config=pulumi.cloudbuild.yaml',
+      '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT},_BUILD_TYPE=${_BUILD_TYPE}'
+    ]
+    id: 'pulumi'
+    waitFor: ['-']
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [

@@ -12,7 +12,7 @@ paths:
     get:
       operationId: admin-add-tweet
       x-google-backend:
-        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/admin_add_tweet
+        address: https://europe-west1-tweets-cadeira-2122.cloudfunctions.net/admin_add_tweet
       responses:
         '200':
           description: Authorized or not authorized
@@ -20,7 +20,7 @@ paths:
     get:
       operationId: admin-delete-tweet
       x-google-backend:
-        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/admin_delete_tweet
+        address: https://europe-west1-tweets-cadeira-2122.cloudfunctions.net/admin-delete-tweet
       responses:
         '200':
           description: Authorized or not authorized
@@ -28,7 +28,7 @@ paths:
     get:
       operationId: list-tweet-language
       x-google-backend:
-        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_language
+        address: https://europe-west1-tweets-cadeira-2122.cloudfunctions.net/list_tweet_language
       responses:
         '200':
           description: Tweet text
@@ -40,7 +40,7 @@ paths:
     get:
       operationId: list-tweet-location
       x-google-backend:
-        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_location
+        address: https://europe-west1-tweets-cadeira-2122.cloudfunctions.net/list_tweet_location
       responses:
         '200':
           description: Tweet text
@@ -52,7 +52,7 @@ paths:
     get:
       operationId: list-tweet-random
       x-google-backend:
-        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_random
+        address: https://europe-west1-tweets-cadeira-2122.cloudfunctions.net/list_tweet_random
       responses:
         '200':
           description: Tweet text
@@ -64,7 +64,7 @@ paths:
     get:
       operationId: list-tweet-search
       x-google-backend:
-        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_search
+        address: https://europe-west1-tweets-cadeira-2122.cloudfunctions.net/list_tweet_search
       responses:
         '200':
           description: Tweet text
@@ -76,7 +76,7 @@ paths:
     get:
       operationId: list-tweet-username
       x-google-backend:
-        address: https://europe-west1-cadeira-nuvem-2122.cloudfunctions.net/list_tweet_username
+        address: https://europe-west1-tweets-cadeira-2122.cloudfunctions.net/list_tweet_username
       responses:
         '200':
           description: Tweet text
