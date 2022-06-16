@@ -60,8 +60,7 @@ db_readfiles = bigquery.Table(resource_name='db_readfiles',
 
 # API
 
-api = apigateway.Api("ukraine-api", api_id="ukraine-api",
-    opts=pulumi.ResourceOptions(provider=google_beta))
+api = apigateway.Api("ukraine-api", api_id="ukraine-api")
 
 
 api_config = apigateway.ApiConfig("ukraine-functions-config",
@@ -78,6 +77,5 @@ api_config = apigateway.ApiConfig("ukraine-functions-config",
 
 api_gw_gateway = apigateway.Gateway("ukraine-api-gateway",
     api_config=api_config.id,
-    gateway_id="api-gw",
-    opts=pulumi.ResourceOptions(provider=google_beta))
+    gateway_id="api-gw")
 
