@@ -28,7 +28,7 @@ def _clear_tweets(tweet_list):
     return results
 
 @functions_framework.http
-def clear_tweet_list(request):
+def main(request):
     tweets_list = json.loads(request.form['tweets'])
 
     results = _clear_tweets(tweets_list)
