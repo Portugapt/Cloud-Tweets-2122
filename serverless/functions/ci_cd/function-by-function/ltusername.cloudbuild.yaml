@@ -19,7 +19,7 @@ steps:
             '--runtime=python38',
             '--entry-point=main',
             '--trigger-http',
-            '--source=gs://tweets-cloudfu nctions-zip/list_tweet_username.zip',
+            '--source=gs://tweets-cloudfunctions-zip/list_tweet_username.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-list_tweet_username'
     waitFor: ['add-to-storage-list_tweet_username']
