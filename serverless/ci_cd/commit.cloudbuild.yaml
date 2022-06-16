@@ -17,7 +17,7 @@ steps:
       '--substitutions=_LOCATION=${_LOCATION},_PROJECT=${_PROJECT}'
     ]
     id: 'unittests'
-    waitFor: ['-']
+    waitFor: ['pulumi']
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [
