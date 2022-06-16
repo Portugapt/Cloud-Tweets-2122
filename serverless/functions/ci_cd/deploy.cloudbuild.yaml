@@ -165,6 +165,7 @@ steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['functions', 'deploy', 
             'list_tweet_random',
+            '--allow-unauthenticated',
             '--region=europe-west1',
             '--runtime=python38',
             '--entry-point=main',
