@@ -20,7 +20,7 @@ steps:
             '--runtime=python38',
             '--entry-point=main',
             '--trigger-http',
-            '--source=gs://tweets-cloudfu nctions-zip/list_tweet_search.zip',
+            '--source=gs://tweets-cloudfunctions-zip/list_tweet_search.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-list_tweet_search'
     waitFor: ['add-to-storage-list_tweet_search']
