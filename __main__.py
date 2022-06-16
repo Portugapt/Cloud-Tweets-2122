@@ -1,5 +1,5 @@
 import pulumi
-from pulumi_gcp import storage, bigquery, apigateway, google_beta
+from pulumi_gcp import storage, bigquery, apigateway
 
 import base64
 from typing import List
