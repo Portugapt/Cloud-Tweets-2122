@@ -73,7 +73,7 @@ def _formalize_request(request: Request,
     if not argument_present[1]:
         limit = default_limit
 
-    return {'location': language, 'limit': limit}
+    return {'language': language, 'limit': limit}
 
 def _clean_tweets(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     print('INFO: functions.list_tweet_location.app.main._clean_tweets')
