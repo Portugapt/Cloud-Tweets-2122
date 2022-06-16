@@ -25,4 +25,8 @@ steps:
     waitFor: ['add-to-storage-auth']
 
 
+substitutions:
+  _PROJECT: tweets-cadeira-2122
+  _LOCATION: europe-west1
+
 tags: ['functions','deploy', 'auth']
