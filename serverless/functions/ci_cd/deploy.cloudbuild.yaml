@@ -73,3 +73,5 @@ steps:
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-auth'
     waitFor: ['zip-auth']
+
+tags: ['functions','deploy']
