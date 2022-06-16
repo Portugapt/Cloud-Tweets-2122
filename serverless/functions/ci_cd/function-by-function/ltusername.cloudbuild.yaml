@@ -1,0 +1,32 @@
+steps:
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['-j', 'list_tweet_username.zip', 
+          'serverless/functions/list_tweet_username/app/main.py',
+          'serverless/functions/list_tweet_username/requirements.txt',]
+    id: 'zip-list_tweet_username'
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'list_tweet_username.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-list_tweet_username'
+    waitFor: ['zip-list_tweet_username']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 
+            'list_tweet_username',
+            '--allow-unauthenticated',
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--entry-point=main',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfu nctions-zip/list_tweet_username.zip',
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
+    id: 'deploy-list_tweet_username'
+    waitFor: ['add-to-storage-list_tweet_username']
+
+
+substitutions:
+  _PROJECT: tweets-cadeira-2122
+  _LOCATION: europe-west1
+
+tags: ['functions','deploy', 'list-tweet-username']
