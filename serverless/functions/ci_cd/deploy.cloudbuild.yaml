@@ -99,4 +99,29 @@ steps:
     id: 'deploy-clear_tweet_list'
     waitFor: ['zip-clear_tweet_list']
 
+    ## list_tweet_language pipeline
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['-j', 'list_tweet_language.zip', 
+          'serverless/functions/list_tweet_language/app/main.py',
+          'serverless/functions/list_tweet_language/requirements.txt',]
+    id: 'zip-list_tweet_language'
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'list_tweet_language.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-list_tweet_language'
+    waitFor: ['zip-list_tweet_language']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 
+            'list_tweet_language',
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--entry-point=main',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfunctions-zip/list_tweet_language.zip',
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
+    id: 'deploy-list_tweet_language'
+    waitFor: ['zip-list_tweet_language']
+
 tags: ['functions','deploy']
