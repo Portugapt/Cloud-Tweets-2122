@@ -149,4 +149,29 @@ steps:
     id: 'deploy-list_tweet_location'
     waitFor: ['zip-list_tweet_location']
 
+    ## list_tweet_random pipeline
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['-j', 'list_tweet_random.zip', 
+          'serverless/functions/list_tweet_random/app/main.py',
+          'serverless/functions/list_tweet_random/requirements.txt',]
+    id: 'zip-list_tweet_random'
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'list_tweet_random.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-list_tweet_random'
+    waitFor: ['zip-list_tweet_random']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 
+            'list_tweet_random',
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--entry-point=main',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfunctions-zip/list_tweet_random.zip',
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
+    id: 'deploy-list_tweet_random'
+    waitFor: ['zip-list_tweet_random']
+
 tags: ['functions','deploy']
