@@ -22,7 +22,7 @@ steps:
             '--source=gs://tweets-cloudfunctions-zip/admin_add_tweet.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-admin-add-tweet'
-    waitFor: ['zip-admin-add-tweet']
+    waitFor: ['add-to-storage-admin-add-tweet']
 
     ## admin_delete_tweets pipeline
   - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
@@ -72,7 +72,7 @@ steps:
             '--source=gs://tweets-cloudfunctions-zip/auth.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-auth'
-    waitFor: ['zip-auth']
+    waitFor: ['add-to-storage-auth']
 
     ## clear_tweet_list pipeline
   - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
@@ -97,7 +97,7 @@ steps:
             '--source=gs://tweets-cloudfunctions-zip/clear_tweet_list.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-clear_tweet_list'
-    waitFor: ['zip-clear_tweet_list']
+    waitFor: ['add-to-storage-clear_tweet_list']
 
     ## list_tweet_language pipeline
   - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
@@ -122,7 +122,7 @@ steps:
             '--source=gs://tweets-cloudfunctions-zip/list_tweet_language.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-list_tweet_language'
-    waitFor: ['zip-list_tweet_language']
+    waitFor: ['add-to-storage-list_tweet_language']
 
     ## list_tweet_location pipeline
   - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
@@ -130,7 +130,7 @@ steps:
           'serverless/functions/list_tweet_location/app/main.py',
           'serverless/functions/list_tweet_location/requirements.txt',]
     id: 'zip-list_tweet_location'
-    waitFor: ['-']
+    waitFor: ['deploy-list_tweet_language']
 
   - name: 'gcr.io/cloud-builders/gsutil'
     args: ['-m', 'cp', 'list_tweet_location.zip', 'gs://tweets-cloudfunctions-zip']
@@ -173,6 +173,6 @@ steps:
             '--source=gs://tweets-cloudfunctions-zip/list_tweet_random.zip',
             '--env-vars-file=serverless/functions/.env-admin.yaml']
     id: 'deploy-list_tweet_random'
-    waitFor: ['zip-list_tweet_random']
+    waitFor: ['add-to-storage-list_tweet_random']
 
 tags: ['functions','deploy']
