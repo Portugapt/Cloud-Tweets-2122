@@ -44,12 +44,12 @@ def _query_execution(request) -> List[Dict[str, Any]]:
 def _run_query(query: str, job_config: bigquery.QueryJobConfig) -> List[Dict[str, Any]]:
     print('INFO: functions.list_tweet_location.app.main._run_query')
 
-    key_path = os.getenv("GOOGLE_ACCOUNT_KEY",
-                         "No Access Key")
-
-    credentials = service_account.Credentials.from_service_account_file(
-        key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
-    )
+#    key_path = os.getenv("GOOGLE_ACCOUNT_KEY",
+#                         "No Access Key")
+#
+#    credentials = service_account.Credentials.from_service_account_file(
+#        key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
+#    )
 
     client = bigquery.Client(credentials=credentials,
                              project=credentials.project_id,)
