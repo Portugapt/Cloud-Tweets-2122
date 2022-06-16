@@ -228,3 +228,5 @@ steps:
     waitFor: ['add-to-storage-list_tweet_username']
 
 tags: ['functions','deploy']
+
+timeout: 1800s
