@@ -84,7 +84,7 @@ def _valid_request(request: Request) -> List[bool]:
 
 
 @functions_framework.http
-def auth(request):
+def main(request):
     if all(_valid_request(request)):
         auth_status = authenticate(request)
 
