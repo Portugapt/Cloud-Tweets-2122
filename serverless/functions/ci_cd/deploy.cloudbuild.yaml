@@ -74,4 +74,29 @@ steps:
     id: 'deploy-auth'
     waitFor: ['zip-auth']
 
+    ## clear_tweet_list pipeline
+  - name: '${_LOCATION}-docker.pkg.dev/${_PROJECT}/utils/zip-utils'
+    args: ['-j', 'clear_tweet_list.zip', 
+          'serverless/functions/clear_tweet_list/app/main.py',
+          'serverless/functions/clear_tweet_list/requirements.txt',]
+    id: 'zip-clear_tweet_list'
+    waitFor: ['-']
+
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args: ['-m', 'cp', 'clear_tweet_list.zip', 'gs://tweets-cloudfunctions-zip']
+    id: 'add-to-storage-clear_tweet_list'
+    waitFor: ['zip-clear_tweet_list']
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['functions', 'deploy', 
+            'clear_tweet_list',
+            '--region=europe-west1',
+            '--runtime=python38',
+            '--entry-point=main',
+            '--trigger-http',
+            '--source=gs://tweets-cloudfunctions-zip/clear_tweet_list.zip',
+            '--env-vars-file=serverless/functions/.env-admin.yaml']
+    id: 'deploy-clear_tweet_list'
+    waitFor: ['zip-clear_tweet_list']
+
 tags: ['functions','deploy']
