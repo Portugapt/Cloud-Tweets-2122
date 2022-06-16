@@ -51,8 +51,7 @@ def _run_query(query: str, job_config: bigquery.QueryJobConfig) -> List[Dict[str
 #        key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
 #    )
 
-    client = bigquery.Client(credentials=credentials,
-                             project=credentials.project_id,)
+    client = bigquery.Client()
 
     query_job = client.query(query, job_config=job_config)
 
