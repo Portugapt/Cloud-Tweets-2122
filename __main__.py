@@ -12,9 +12,10 @@ bucket_lz = storage.Bucket(resource_name='tweets-landing-zone',
                            name='tweets-landing-zone')
 
 bucket_cloudfunctions = storage.Bucket(resource_name='tweets-cloudfunctions-zip',
-                                 opts=pulumi.ResourceOptions(protect=True),
-                                 location='EU',
-                                 name='tweets-cloudfunctions-zip')
+                                       opts=pulumi.ResourceOptions(
+                                           protect=True),
+                                       location='EU',
+                                       name='tweets-cloudfunctions-zip')
 
 bucket_dataproc = storage.Bucket(resource_name='tweets-dataproc',
                                  opts=pulumi.ResourceOptions(protect=True),
@@ -31,7 +32,8 @@ pulumi.export('tweets-dataproc',  bucket_dataproc.url)
 
 def _load_json_schema(path: str) -> List:
     with open(path, "r") as file:
-        return file.read().replace('\n','')
+        return file.read().replace('\n', '')
+
 
 dataset_tweets = bigquery.Dataset(resource_name='bq_cloud_2122',
                                   opts=pulumi.ResourceOptions(
@@ -60,21 +62,24 @@ db_readfiles = bigquery.Table(resource_name='db_readfiles',
 
 # API
 
-api = apigateway.Api("ukraine-api", api_id="ukraine-api")
+api = apigateway.Api("ukraine-api", api_id="ukraine-api",
+                     opts=pulumi.ResourceOptions(protect=True),)
 
 
 api_config = apigateway.ApiConfig("ukraine-functions-config",
-    api=api.api_id,
-    api_config_id="cfg",
-    openapi_documents=[apigateway.ApiConfigOpenapiDocumentArgs(
-        document=apigateway.ApiConfigOpenapiDocumentDocumentArgs(
-            path="serverless/api_gateway/config.yaml",
-            contents=(lambda path: base64.b64encode(open(path).read().encode()).decode())("serverless/api_gateway/config.yaml"),
-        ),
-    )])
+                                  api=api.api_id,
+                                  api_config_id="cfg",
+                                  openapi_documents=[apigateway.ApiConfigOpenapiDocumentArgs(
+                                      document=apigateway.ApiConfigOpenapiDocumentDocumentArgs(
+                                          path="serverless/api_gateway/config.yaml",
+                                          contents=(lambda path: base64.b64encode(open(path).read().encode()).decode())(
+                                              "serverless/api_gateway/config.yaml"),
+                                      ),
+                                  )],
+                                  opts=pulumi.ResourceOptions(protect=True),)
 
 
 api_gw_gateway = apigateway.Gateway("ukraine-api-gateway",
-    api_config=api_config.id,
-    gateway_id="api-gw")
-
+                                    api_config=api_config.id,
+                                    gateway_id="api-gw",
+                                    opts=pulumi.ResourceOptions(protect=True),)
