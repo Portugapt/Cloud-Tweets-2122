@@ -62,32 +62,31 @@ db_readfiles = bigquery.Table(resource_name='db_readfiles',
 
 # API
 
-#api = apigateway.Api("ukraine-api", api_id="ukraine-api",
-#                     labels={'version': '1'},
-#                     opts=pulumi.ResourceOptions(protect=False,
-#                                                 delete_before_replace=True,
-#                                                 replace_on_changes=["labels.version"]),)
-#
-#
-#api_config = apigateway.ApiConfig("ukraine-functions-config",
-#                                  labels={'version': '1'},
-#                                  api=api.api_id,
-#                                  api_config_id="cfg",
-#                                  openapi_documents=[apigateway.ApiConfigOpenapiDocumentArgs(
-#                                      document=apigateway.ApiConfigOpenapiDocumentDocumentArgs(
-#                                          path="spec.yaml",
-#                                          contents=(lambda path: base64.b64encode(open(path).read().encode()).decode())(
-#                                              "serverless/api_gateway/config.yaml"),
-#                                      ),
-#                                  )],
-#                                  opts=pulumi.ResourceOptions(protect=False,
-#                                                              replace_on_changes=["labels.version"],),)
-#
-#
-#api_gw_gateway = apigateway.Gateway("ukraine-api-gateway",
-#                                    labels={'version': '1'},
-#                                    api_config=api_config.id,
-#                                    gateway_id="api-gw",
-#                                    opts=pulumi.ResourceOptions(protect=False,
-#                                                                replace_on_changes=["labels.version"],),)
-#
+api = apigateway.Api("ukraine-api", api_id="ukraine-api",
+                     labels={'version': '1'},
+                     opts=pulumi.ResourceOptions(protect=False,
+                                                 delete_before_replace=True,
+                                                 replace_on_changes=["labels.version"]),)
+
+
+api_config = apigateway.ApiConfig("ukraine-functions-config",
+                                  labels={'version': '1'},
+                                  api=api.api_id,
+                                  api_config_id="cfg",
+                                  openapi_documents=[apigateway.ApiConfigOpenapiDocumentArgs(
+                                      document=apigateway.ApiConfigOpenapiDocumentDocumentArgs(
+                                          path="spec.yaml",
+                                          contents=(lambda path: base64.b64encode(open(path).read().encode()).decode())(
+                                              "serverless/api_gateway/config.yaml"),
+                                      ),
+                                  )],
+                                  opts=pulumi.ResourceOptions(protect=False,
+                                                              replace_on_changes=["labels.version"],),)
+
+
+api_gw_gateway = apigateway.Gateway("ukraine-api-gateway",
+                                    labels={'version': '1'},
+                                    api_config=api_config.id,
+                                    gateway_id="api-gw",
+                                    opts=pulumi.ResourceOptions(protect=False,
+                                                                replace_on_changes=["labels.version"],),)
