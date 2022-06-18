@@ -64,7 +64,7 @@ db_readfiles = bigquery.Table(resource_name='db_readfiles',
 
 api = apigateway.Api("ukraine-api", api_id="ukraine-api",
                      labels={'version': '1'},
-                     opts=pulumi.ResourceOptions(protect=False,
+                     opts=pulumi.ResourceOptions(protect=True,
                                                  delete_before_replace=True,
                                                  replace_on_changes=["labels.version"]),)
 
@@ -80,7 +80,7 @@ api_config = apigateway.ApiConfig("ukraine-functions-config",
                                               "serverless/api_gateway/config.yaml"),
                                       ),
                                   )],
-                                  opts=pulumi.ResourceOptions(protect=False,
+                                  opts=pulumi.ResourceOptions(protect=True,
                                                               replace_on_changes=["labels.version"],),)
 
 
@@ -88,5 +88,6 @@ api_gw_gateway = apigateway.Gateway("ukraine-api-gateway",
                                     labels={'version': '1'},
                                     api_config=api_config.id,
                                     gateway_id="api-gw",
+                                    region='europe-west1',
                                     opts=pulumi.ResourceOptions(protect=False,
                                                                 replace_on_changes=["labels.version"],),)
