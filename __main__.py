@@ -63,7 +63,9 @@ db_readfiles = bigquery.Table(resource_name='db_readfiles',
 # API
 
 api = apigateway.Api("ukraine-api", api_id="ukraine-api",
-                     opts=pulumi.ResourceOptions(protect=True),)
+                     opts=pulumi.ResourceOptions(protect=True,
+                                                delete_before_replace=True,
+                                                replace_on_changes=["*"]),)
 
 
 api_config = apigateway.ApiConfig("ukraine-functions-config",
