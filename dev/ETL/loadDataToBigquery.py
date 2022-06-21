@@ -10,12 +10,12 @@ import pandas as pd
 
 logging.basicConfig(level=logging.INFO)
 
-BUCKET = 'cloud-computing-2122-bjr'
-BUCKET_LINK = 'gs://cloud-computing-2122-bjr'
+BUCKET = 'tweets-dataproc'
+BUCKET_LINK = 'gs://tweets-dataproc'
 TEMP_BUCKET = 'cloud-computing-2122-dataproc-temp'
 
-DB_GLOBAL = 'cadeira-nuvem-2122:bq_cloud_2122.db_global'
-DB_READFILES = 'cadeira-nuvem-2122:bq_cloud_2122.db_readfiles'
+DB_GLOBAL = 'tweets-cadeira-2122:bq_cloud_2122.db_global'
+DB_READFILES = 'tweets-cadeira-2122:bq_cloud_2122.db_readfiles'
 
 GLOBAL_SCHEMA = StructType([ \
     StructField("RowID",IntegerType(),False), \
