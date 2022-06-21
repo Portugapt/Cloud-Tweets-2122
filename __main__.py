@@ -1,5 +1,5 @@
 import pulumi
-from pulumi_gcp import storage, bigquery, apigateway
+from pulumi_gcp import storage, bigquery, apigateway, compute
 
 import base64
 from typing import List
@@ -89,5 +89,8 @@ api_gw_gateway = apigateway.Gateway("ukraine-api-gateway",
                                     api_config=api_config.id,
                                     gateway_id="api-gw",
                                     region='europe-west1',
-                                    opts=pulumi.ResourceOptions(protect=False,
-                                                                replace_on_changes=["labels.version"],),)
+                                    opts=pulumi.ResourceOptions(protect=True,
+                                                                replace_on_changes=[
+                                                                    "labels.version"],
+                                                                ),
+                                    )
