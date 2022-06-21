@@ -26,7 +26,7 @@ def _query_execution(request) -> List[Dict[str, Any]]:
 
     query = """
             SELECT tweetId, username, tweettext
-            FROM `cadeira-nuvem-2122.bq_cloud_2122.db_global`
+            FROM `tweets-cadeira-2122.bq_cloud_2122.db_global`
             WHERE location LIKE @location
             LIMIT @limit"""
 

@@ -1,5 +1,6 @@
 cython
 google-cloud
+google-api-core
 google-cloud-bigquery
 grpcio-tools
 flask

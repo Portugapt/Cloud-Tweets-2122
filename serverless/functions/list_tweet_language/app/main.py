@@ -32,7 +32,7 @@ def query(request):
 
     query = """
             SELECT tweetId, username, tweettext
-            FROM `cadeira-nuvem-2122.bq_cloud_2122.db_global`
+            FROM `tweets-cadeira-2122.bq_cloud_2122.db_global`
             WHERE language = @language
             LIMIT @limit"""
 

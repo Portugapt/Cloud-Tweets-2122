@@ -27,7 +27,7 @@ def authenticate(request: Request) -> int:
 
     query = """
             SELECT username
-            FROM `cadeira-nuvem-2122.bq_cloud_2122.db_admin_user`
+            FROM `tweets-cadeira-2122.bq_cloud_2122.db_admin_user`
             WHERE username = @username
             AND password = @password"""
 

@@ -6,8 +6,15 @@ import functions_framework
 import requests
 from flask import Flask, Request, json
 from google.cloud import bigquery
-from google.oauth2 import service_account
+from google.oauth2 import credentials
+import google.auth
 
+def _credentials() -> credentials.Credentials:
+    c, _ = google.auth.default(scopes=[
+        "https://www.googleapis.com/auth/bigquery",
+        ])
+
+    return c
 
 def _create_app():
     print('INFO: functions.admin_add_tweet.app.main._create_app')
@@ -26,18 +33,11 @@ def _query_add_tweet(request: Request):
     if not tweetId:
         tweetId = random.randint(100000, 1000000000000000000)
 
-    key_path = os.getenv("GOOGLE_ACCOUNT_KEY",
-                         "../keys/pythonBigQuery_credentials.json")
-
-    credentials = service_account.Credentials.from_service_account_file(
-        key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
-    )
-
-    client = bigquery.Client(credentials=credentials,
-                             project=credentials.project_id,)
+    client = bigquery.Client(credentials=_credentials(),
+                             project="tweets-cadeira-2122")
 
     query = """
-            INSERT INTO `cadeira-nuvem-2122.bq_cloud_2122.db_global`
+            INSERT INTO `tweets-cadeira-2122.bq_cloud_2122.db_global`
             (tweetId, username, tweettext)
             VALUES (@tweetId, @username, @tweettext)"""
 

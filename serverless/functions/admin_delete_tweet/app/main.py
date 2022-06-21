@@ -6,10 +6,18 @@ import functions_framework
 import requests
 from flask import Flask, Request
 from google.cloud import bigquery
-from google.oauth2 import service_account
+from google.oauth2 import credentials
+import google.auth
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
+
+def _credentials() -> credentials.Credentials:
+    c, _ = google.auth.default(scopes=[
+        "https://www.googleapis.com/auth/bigquery",
+        ])
+
+    return c
 
 def _create_app():
     print('INFO: functions.admin_delete_tweet.app.main._create_app')
@@ -27,7 +35,7 @@ def _run_query(query: str, job_config: bigquery.QueryJobConfig) -> None:
         key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"],
     )
 
-    BQ = bigquery.Client(credentials=credentials, project=credentials.project_id,)
+    BQ = bigquery.Client(credentials=_credentials(), project="tweets-cadeira-2122")
 
     query_job = BQ.query(query, job_config=job_config) 
 
@@ -39,7 +47,7 @@ def _query_job(request: Request) -> None:
     tweetID = request.args.get("tweetid")
 
     query = """
-        DELETE FROM `cadeira-nuvem-2122.bq_cloud_2122.db_global`
+        DELETE FROM `tweets-cadeira-2122.bq_cloud_2122.db_global`
         WHERE tweetId = @tweetId"""
     
     job_config = bigquery.QueryJobConfig(

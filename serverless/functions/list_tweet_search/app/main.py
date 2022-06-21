@@ -34,7 +34,7 @@ def query(request: Dict[str, str]):
 
     query = """
             SELECT tweetId, username, tweettext
-            FROM `cadeira-nuvem-2122.bq_cloud_2122.db_global`
+            FROM `tweets-cadeira-2122.bq_cloud_2122.db_global`
             WHERE username LIKE @search
             OR tweettext LIKE @search
             LIMIT @limit"""
