@@ -5,7 +5,6 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: 34.78.69.83.nip.io
